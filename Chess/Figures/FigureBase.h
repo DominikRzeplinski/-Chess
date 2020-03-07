@@ -1,10 +1,11 @@
 #ifndef FIGUREBASE_H
 #define FIGUREBASE_H
+#include "QGraphicsPixmapItem"
 
-class FigureBase{
+class FigureBase :public QGraphicsPixmapItem
+{
 public:
   FigureBase();
-  ~FigureBase();
   bool ValidatePosition();
 protected:
   int PositionX;

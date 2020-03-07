@@ -19,6 +19,7 @@ SOURCES += \
     ChessBoard/ChessBoard.cpp \
     ChessBoard/ChessBoardBox.cpp \
     Figures/FigureBase.cpp \
+    Figures/FigureKing.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -26,6 +27,7 @@ HEADERS += \
     ChessBoard/ChessBoard.h \
     ChessBoard/ChessBoardBox.h \
     Figures/FigureBase.h \
+    Figures/FigureKing.h \
     mainwindow.h
 
 FORMS += \
@@ -35,3 +37,8 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    Resources/Resources.qrc
+
+DISTFILES +=
