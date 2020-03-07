@@ -5,7 +5,7 @@
 class FigureBase :public QGraphicsPixmapItem
 {
 public:
-  FigureBase();
+  FigureBase(QGraphicsItem *parent = 0);
   bool ValidatePosition();
 protected:
   int PositionX;

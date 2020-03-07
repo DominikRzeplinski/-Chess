@@ -5,7 +5,7 @@
 class FigureKing : public FigureBase
 {
 public:
-  FigureKing();
+  FigureKing(QGraphicsItem *parent =0);
 };
 
 #endif // FIGUREKING_H

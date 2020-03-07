@@ -20,7 +20,7 @@ void ChessBoard::Reset()
           king->setPos(box->pos());
           addItem(box);
           addItem(king);
-          //m_boxes->append(box);
+          m_boxes.append(box);
       }
   }
 }

@@ -9,7 +9,7 @@ public:
   ChessBoard(QObject *parent = 0);
   void Reset();
 private:
-  QList<ChessBoardBox*> *m_boxes;
+  QList<ChessBoardBox*> m_boxes;
 };
 
 #endif // CHESSBOARD_H

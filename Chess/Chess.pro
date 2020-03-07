@@ -19,7 +19,12 @@ SOURCES += \
     ChessBoard/ChessBoard.cpp \
     ChessBoard/ChessBoardBox.cpp \
     Figures/FigureBase.cpp \
+    Figures/FigureBishop.cpp \
     Figures/FigureKing.cpp \
+    Figures/FigureKnight.cpp \
+    Figures/FigurePawn.cpp \
+    Figures/FigureQueen.cpp \
+    Figures/FigureRook.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -27,7 +32,12 @@ HEADERS += \
     ChessBoard/ChessBoard.h \
     ChessBoard/ChessBoardBox.h \
     Figures/FigureBase.h \
+    Figures/FigureBishop.h \
     Figures/FigureKing.h \
+    Figures/FigureKnight.h \
+    Figures/FigurePawn.h \
+    Figures/FigureQueen.h \
+    Figures/FigureRook.h \
     mainwindow.h
 
 FORMS += \

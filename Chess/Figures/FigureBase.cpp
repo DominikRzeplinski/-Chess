@@ -1,6 +1,6 @@
 #include "FigureBase.h"
 
-FigureBase::FigureBase()
+FigureBase::FigureBase(QGraphicsItem *parent):QGraphicsPixmapItem(parent)
 {
   PositionX =0;
   PositionY =0;
