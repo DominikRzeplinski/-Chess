@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include "ChessBoard/ChessBoard.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -15,7 +15,13 @@ public:
   MainWindow(QWidget *parent = nullptr);
   ~MainWindow();
 
+private slots:
+  void on_actionExit_triggered();
+
+  void on_actionNew_game_triggered();
+
 private:
   Ui::MainWindow *ui;
+  ChessBoard *m_sceneChessBoard;
 };
 #endif // MAINWINDOW_H
