@@ -1,6 +1,15 @@
 #include "FigureKing.h"
 
-FigureKing::FigureKing(QGraphicsItem *parent):FigureBase(parent)
+FigureKing::FigureKing(bool side,int x, int y,QGraphicsItem *parent):FigureBase(side,x,y,parent)
 {
-  setPixmap(QPixmap(":/Chess_klt45.svg"));
+  if (side)
+    setPixmap(QPixmap(":/Chess_kdt45.svg"));
+  else
+    setPixmap(QPixmap(":/Chess_klt45.svg"));
+
+}
+
+bool FigureKing::ValidatePosition()
+{
+  return false;
 }

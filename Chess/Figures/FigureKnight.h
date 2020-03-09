@@ -6,7 +6,8 @@
 class FigureKnight: public FigureBase
 {
 public:
-  FigureKnight(QGraphicsItem *parent =0);
+  FigureKnight(bool side = true, int x =0, int y =0,QGraphicsItem *parent =0);
+  bool ValidatePosition();
 };
 
 #endif // FIGUREKNIGHT_H

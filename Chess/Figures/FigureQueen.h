@@ -6,7 +6,8 @@
 class FigureQueen: public FigureBase
 {
 public:
-  FigureQueen(QGraphicsItem *parent =0);
+  FigureQueen(bool side = true, int x =0, int y =0,QGraphicsItem *parent =0);
+  bool ValidatePosition();
 };
 
 #endif // FIGUREQUEEN_H

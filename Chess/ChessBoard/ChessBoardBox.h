@@ -10,7 +10,9 @@ public:
 private:
   int const m_sizeOfBox = 50;
   int const m_leftOfBoard = 200;
-  int const m_topOfBoard = 75;
+  int const m_topOfBoard = 100;
+  int PositionX;
+  int PositionY;
 };
 
 #endif // CHESSBOARDBOX_H

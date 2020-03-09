@@ -6,7 +6,8 @@
 class FigurePawn: public FigureBase
 {
 public:
-  FigurePawn(QGraphicsItem *parent =0);
+  FigurePawn(bool side = true, int x =0, int y =0,QGraphicsItem *parent =0);
+  bool ValidatePosition();
 };
 
 #endif // FIGUREPAWN_H

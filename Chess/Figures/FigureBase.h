@@ -5,9 +5,10 @@
 class FigureBase :public QGraphicsPixmapItem
 {
 public:
-  FigureBase(QGraphicsItem *parent = 0);
-  bool ValidatePosition();
+  FigureBase(bool side = true, int x =0, int y =0, QGraphicsItem *parent = 0);
+  bool virtual ValidatePosition() =0;
 protected:
+  bool LeftSide;
   int PositionX;
   int PositionY;
 };

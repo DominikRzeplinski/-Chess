@@ -1,13 +1,10 @@
 #include "FigureBase.h"
 
-FigureBase::FigureBase(QGraphicsItem *parent):QGraphicsPixmapItem(parent)
+FigureBase::FigureBase(bool side,int x, int y, QGraphicsItem *parent):QGraphicsPixmapItem(parent)
 {
-  PositionX =0;
-  PositionY =0;
+  LeftSide = side;
+  PositionX =x;
+  PositionY =y;
 }
 
-bool FigureBase::ValidatePosition()
-{
-  return true;
-}
 

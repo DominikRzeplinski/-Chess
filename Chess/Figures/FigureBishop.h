@@ -6,7 +6,8 @@
 class FigureBishop: public FigureBase
 {
 public:
-  FigureBishop(QGraphicsItem *parent =0);
+  FigureBishop(bool side = true, int x =0, int y =0,QGraphicsItem *parent =0);
+  bool ValidatePosition();
 };
 
 #endif // FIGUREBISHOP_H
