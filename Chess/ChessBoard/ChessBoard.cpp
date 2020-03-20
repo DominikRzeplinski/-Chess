@@ -6,16 +6,21 @@
 #include "Figures/FigureQueen.h"
 #include "Figures/FigureRook.h"
 
-ChessBoard::ChessBoard(QObject *parent): QGraphicsScene(parent)
+ChessBoard::ChessBoard()
 {
-  setSceneRect(0,0,800,600);
+  m_panelLeft = NULL;
+  m_panelRight = NULL;
   Reset();
 }
 
 void ChessBoard::CleanScene()
 {
-  clear();
   m_boxes.clear();
+  m_figures.clear();
+  if (m_panelLeft)
+    delete m_panelLeft;
+  if (m_panelRight)
+    delete m_panelRight;
   m_panelLeft = NULL;
   m_panelRight = NULL;
 }
@@ -29,7 +34,6 @@ void ChessBoard::Reset()
       for(int x = 0; x < 8; x++)
       {
           box = new ChessBoardBox(x,y);
-          addItem(box);
           m_boxes.append(box);
           if (x <= 1 || x >=6)
           {
@@ -69,13 +73,10 @@ void ChessBoard::Reset()
 
           }
           figureBase->setPos(box->pos());
-          addItem(figureBase);
           m_figures.append(figureBase);
           }
       }
   }
   m_panelLeft = new ChessBoardSidePanel();
   m_panelRight = new ChessBoardSidePanel(false);
-  addItem(m_panelLeft);
-  addItem(m_panelRight);
 }
