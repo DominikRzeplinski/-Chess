@@ -9,8 +9,9 @@ Q_OBJECT
 public:
   FigureBase(bool side = true, int x =0, int y =0, QGraphicsItem *parent = 0);
   bool virtual ValidatePosition(int PositionX, int PositionY) =0;
-  int PositionX;
-  int PositionY;
+  int m_positionX;
+  int m_positionY;
+  bool m_stopOnOtherFigure;
 protected:
   void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
   void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;

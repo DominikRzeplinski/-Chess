@@ -1,4 +1,5 @@
 #include "FigureBishop.h"
+#include "QtMath"
 
 FigureBishop::FigureBishop(bool side,int x, int y,QGraphicsItem *parent):FigureBase(side,x,y,parent)
 {
@@ -12,9 +13,13 @@ FigureBishop::FigureBishop(bool side,int x, int y,QGraphicsItem *parent):FigureB
     setPixmap(QPixmap(":/File_Chess_blt45.svg"));
     m_image.load(":/File_Chess_blt45.svg");
   }
+  m_stopOnOtherFigure = true;
 }
 
-bool FigureBishop::ValidatePosition(int PositionX, int PositionY)
+bool FigureBishop::ValidatePosition(int positionX, int positionY)
 {
-  return true;
+  if (qFabs(m_positionX - positionX) == qFabs(m_positionY - positionY))
+    return true;
+
+  return false ;
 }

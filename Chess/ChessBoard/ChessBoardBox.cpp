@@ -9,6 +9,7 @@ ChessBoardBox::ChessBoardBox(int xPos, int yPos, QGraphicsItem *parent):QGraphic
   PositionX = xPos;
   PositionY = yPos;
   ResetBrush();
+  m_bHasFigure = false;
 }
 
 void ChessBoardBox::ResetBrush()

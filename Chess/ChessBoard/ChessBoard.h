@@ -15,6 +15,7 @@ public:
   ChessBoardSidePanel* m_panelRight;
   QList<FigureBase*> m_figures;
 private:
+  bool validateMoveInOneDirection(int idxFigure,int xPos, int yPos);
   void CleanScene();
 public slots:
     void validMoves(int PositionX, int PositionY);

@@ -13,8 +13,8 @@ FigureBase::FigureBase(bool side,int x, int y, QGraphicsItem *parent):QGraphicsP
   setCursor(Qt::OpenHandCursor);
   setAcceptedMouseButtons(Qt::LeftButton);
   LeftSide = side;
-  PositionX =x;
-  PositionY =y;
+  m_positionX =x;
+  m_positionY =y;
 }
 
 void FigureBase::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -22,7 +22,7 @@ void FigureBase::mousePressEvent(QGraphicsSceneMouseEvent *event)
     m_translatePoint = mapToScene(event->pos()) - pos();
     setZValue(1);
     setCursor(Qt::ClosedHandCursor);
-    emit figureSelected(PositionX,PositionY);
+    emit figureSelected(m_positionX,m_positionY);
 }
 
 void FigureBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *)

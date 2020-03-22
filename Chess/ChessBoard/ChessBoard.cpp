@@ -35,9 +35,11 @@ void ChessBoard::Reset()
       for(int x = 0; x < 8; x++)
       {
           box = new ChessBoardBox(x,y);
-          m_boxes.append(box);
+          box->m_bHasFigure = false;
+
           if (x <= 1 || x >=6)
           {
+              box->m_bHasFigure = true;
           if (x ==0 )
           {
               if (y == 0 || y == 7)
@@ -80,27 +82,95 @@ void ChessBoard::Reset()
           QObject::connect(figureBase, &FigureBase::figureDeselected,
                                this, &ChessBoard::clearMoves);
           }
+
+          m_boxes.append(box);
       }
   }
   m_panelLeft = new ChessBoardSidePanel();
   m_panelRight = new ChessBoardSidePanel(false);
 }
 
-void ChessBoard::validMoves(int PositionX, int PositionY)
+void ChessBoard::validMoves(int positionX, int positionY)
 {
+
   for (int i =0; i < m_figures.count(); ++i)
     {
-      if (m_figures.at(i)->PositionX == PositionX && m_figures.at(i)->PositionY == PositionY)
+      if (m_figures.at(i)->m_positionX == positionX && m_figures.at(i)->m_positionY == positionY)
         {
-          for (int j=0;j<m_boxes.count();++j)
-            {
-              if (m_figures.at(i)->ValidatePosition(m_boxes.at(j)->PositionX, m_boxes.at(j)->PositionY))
-                m_boxes.at(j)->setBrush(Qt::green);
-            }
+          bool bBreake = false;
+          for (int x=positionX;x<8;++x)
+          {
+              for (int y=positionY; y<8;++y)
+              {
+                  if (x == positionX && y == positionY)
+                    continue;
+                  if (!validateMoveInOneDirection(i,x,y)) bBreake = true;
+                  if (bBreake) break;
+              }
+              if (bBreake) break;
+          }
+          bBreake = false;
+          for (int x=positionX;x<8;++x)
+          {
+              for (int y=positionY; y>=0;--y)
+              {
+                  if (x == positionX && y == positionY)
+                    continue;
+                  if (!validateMoveInOneDirection(i,x,y)) bBreake = true;
+                  if (bBreake) break;
+              }
+              if (bBreake) break;
+          }
+          bBreake = false;
+          for (int x=positionX;x>=0;--x)
+          {
+              for (int y=positionY; y<8;++y)
+              {
+                  if (x == positionX && y == positionY)
+                    continue;
+                  if (!validateMoveInOneDirection(i,x,y)) bBreake = true;
+                  if (bBreake) break;
+              }
+              if (bBreake) break;
+          }
+          bBreake = false;
+          for (int x=positionX;x>=0;--x)
+          {
+              for (int y=positionY; y>=0;--y)
+              {
+                  if (x == positionX && y == positionY)
+                    continue;
+                  if (!validateMoveInOneDirection(i,x,y)) bBreake = true;
+                  if (bBreake) break;
+              }
+              if (bBreake) break;
+          }
           break;
         }
     }
 }
+
+
+bool ChessBoard::validateMoveInOneDirection(int idxFigure,int xPos, int yPos)
+{
+  for (int j=0; j< m_boxes.count(); ++j)
+    {
+        if (m_boxes.at(j)->PositionX == xPos && m_boxes.at(j)->PositionY == yPos)
+        {
+            if (m_figures.at(idxFigure)->ValidatePosition(m_boxes.at(j)->PositionX, m_boxes.at(j)->PositionY)
+                && !m_boxes.at(j)->m_bHasFigure)
+              {
+                m_boxes.at(j)->setBrush(Qt::green);
+                return true;
+              }
+            else if (m_figures.at(idxFigure)->ValidatePosition(m_boxes.at(j)->PositionX, m_boxes.at(j)->PositionY) && m_boxes.at(j)->m_bHasFigure && m_figures.at(idxFigure)->m_stopOnOtherFigure)
+              return false;
+            break;
+        }
+    }
+  return true;
+}
+
 
 void ChessBoard::clearMoves()
 {
