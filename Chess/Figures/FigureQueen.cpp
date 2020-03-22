@@ -15,7 +15,7 @@ FigureQueen::FigureQueen(bool side,int x, int y,QGraphicsItem *parent):FigureBas
 
 }
 
-bool FigureQueen::ValidatePosition()
+bool FigureQueen::ValidatePosition(int PositionX, int PositionY)
 {
   return false;
 }

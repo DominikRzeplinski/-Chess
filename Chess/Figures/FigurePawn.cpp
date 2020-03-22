@@ -14,7 +14,7 @@ FigurePawn::FigurePawn(bool side,int x, int y,QGraphicsItem *parent):FigureBase(
   }
 }
 
-bool FigurePawn::ValidatePosition()
+bool FigurePawn::ValidatePosition(int PositionX, int PositionY)
 {
   return false;
 }

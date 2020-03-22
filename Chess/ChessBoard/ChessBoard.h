@@ -4,8 +4,9 @@
 #include "ChessBoardSidePanel.h"
 #include "Figures/FigureBase.h"
 
-class ChessBoard
+class ChessBoard :public QObject
 {
+Q_OBJECT
 public:
   ChessBoard();
   void Reset();
@@ -15,6 +16,9 @@ public:
   QList<FigureBase*> m_figures;
 private:
   void CleanScene();
+public slots:
+    void validMoves(int PositionX, int PositionY);
+    void clearMoves();
 };
 
 #endif // CHESSBOARD_H

@@ -6,13 +6,14 @@
 class ChessBoardBox: public QGraphicsRectItem
 {
 public:
+  int PositionX;
+  int PositionY;
   ChessBoardBox(int xPos, int yPos, QGraphicsItem *parent=0);
+  void ResetBrush();
 private:
   int const m_sizeOfBox = 50;
   int const m_leftOfBoard = 200;
   int const m_topOfBoard = 100;
-  int PositionX;
-  int PositionY;
 };
 
 #endif // CHESSBOARDBOX_H

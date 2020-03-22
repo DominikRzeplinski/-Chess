@@ -14,7 +14,7 @@ FigureKnight::FigureKnight(bool side,int x, int y,QGraphicsItem *parent):FigureB
   }
 }
 
-bool FigureKnight::ValidatePosition()
+bool FigureKnight::ValidatePosition(int PositionX, int PositionY)
 {
   return false;
 }

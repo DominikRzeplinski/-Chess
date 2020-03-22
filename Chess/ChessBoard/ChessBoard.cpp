@@ -5,6 +5,7 @@
 #include "Figures/FigurePawn.h"
 #include "Figures/FigureQueen.h"
 #include "Figures/FigureRook.h"
+#include <QGraphicsScene>
 
 ChessBoard::ChessBoard()
 {
@@ -74,9 +75,37 @@ void ChessBoard::Reset()
           }
           figureBase->setPos(box->pos());
           m_figures.append(figureBase);
+          QObject::connect(figureBase, &FigureBase::figureSelected,
+                               this, &ChessBoard::validMoves);
+          QObject::connect(figureBase, &FigureBase::figureDeselected,
+                               this, &ChessBoard::clearMoves);
           }
       }
   }
   m_panelLeft = new ChessBoardSidePanel();
   m_panelRight = new ChessBoardSidePanel(false);
+}
+
+void ChessBoard::validMoves(int PositionX, int PositionY)
+{
+  for (int i =0; i < m_figures.count(); ++i)
+    {
+      if (m_figures.at(i)->PositionX == PositionX && m_figures.at(i)->PositionY == PositionY)
+        {
+          for (int j=0;j<m_boxes.count();++j)
+            {
+              if (m_figures.at(i)->ValidatePosition(m_boxes.at(j)->PositionX, m_boxes.at(j)->PositionY))
+                m_boxes.at(j)->setBrush(Qt::green);
+            }
+          break;
+        }
+    }
+}
+
+void ChessBoard::clearMoves()
+{
+          for (int j=0;j<m_boxes.count();++j)
+            {
+              m_boxes.at(j)->ResetBrush();
+            }
 }

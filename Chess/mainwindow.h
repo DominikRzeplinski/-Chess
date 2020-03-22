@@ -24,7 +24,7 @@ private slots:
   void on_actionSave_game_triggered();
   
   void on_actionLoad_game_triggered();
-  
+  void Reset();
 private:
   Ui::MainWindow *ui;
   ChessBoard * m_chessBoard;

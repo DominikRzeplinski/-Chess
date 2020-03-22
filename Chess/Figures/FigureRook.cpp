@@ -15,7 +15,7 @@ FigureRook::FigureRook(bool side,int x, int y,QGraphicsItem *parent):FigureBase(
 
 }
 
-bool FigureRook::ValidatePosition()
+bool FigureRook::ValidatePosition(int PositionX, int PositionY)
 {
   return false;
 }

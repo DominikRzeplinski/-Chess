@@ -14,7 +14,7 @@ FigureKing::FigureKing(bool side,int x, int y,QGraphicsItem *parent):FigureBase(
   }
 }
 
-bool FigureKing::ValidatePosition()
+bool FigureKing::ValidatePosition(int PositionX, int PositionY)
 {
   return false;
 }

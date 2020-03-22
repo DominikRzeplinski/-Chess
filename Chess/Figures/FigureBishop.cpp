@@ -14,7 +14,7 @@ FigureBishop::FigureBishop(bool side,int x, int y,QGraphicsItem *parent):FigureB
   }
 }
 
-bool FigureBishop::ValidatePosition()
+bool FigureBishop::ValidatePosition(int PositionX, int PositionY)
 {
-  return false;
+  return true;
 }

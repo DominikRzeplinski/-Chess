@@ -17,17 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
   gameView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   m_sceneChessBoard = new ChessBoardScene();
   m_chessBoard = new ChessBoard();
-  for (int i =0; i < m_chessBoard->m_boxes.count(); ++i)
-  {
-    m_sceneChessBoard->addItem(m_chessBoard->m_boxes.at(i));
-  }
-  for (int i =0; i < m_chessBoard->m_figures.count(); ++i)
-  {
-    m_sceneChessBoard->addItem(m_chessBoard->m_figures.at(i));
-  }
-  m_sceneChessBoard->addItem(m_chessBoard->m_panelLeft);
-  m_sceneChessBoard->addItem(m_chessBoard->m_panelRight);
-
+  Reset();
   gameView->setScene(m_sceneChessBoard);
 
   QBrush brush;
@@ -51,7 +41,7 @@ void MainWindow::on_actionExit_triggered()
 
 void MainWindow::on_actionNew_game_triggered()
 {
-  m_chessBoard->Reset();
+  Reset();
 }
 
 void MainWindow::on_actionSave_game_triggered()
@@ -62,4 +52,20 @@ void MainWindow::on_actionSave_game_triggered()
 void MainWindow::on_actionLoad_game_triggered()
 {
     
+}
+
+void MainWindow::Reset()
+{
+  m_chessBoard->Reset();
+  m_sceneChessBoard->clear();
+  m_sceneChessBoard->addItem(m_chessBoard->m_panelLeft);
+  m_sceneChessBoard->addItem(m_chessBoard->m_panelRight);
+  for (int i =0; i < m_chessBoard->m_boxes.count(); ++i)
+  {
+    m_sceneChessBoard->addItem(m_chessBoard->m_boxes.at(i));
+  }
+  for (int i =0; i < m_chessBoard->m_figures.count(); ++i)
+  {
+    m_sceneChessBoard->addItem(m_chessBoard->m_figures.at(i));
+  }
 }

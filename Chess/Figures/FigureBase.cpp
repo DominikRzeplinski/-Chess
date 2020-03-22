@@ -17,17 +17,22 @@ FigureBase::FigureBase(bool side,int x, int y, QGraphicsItem *parent):QGraphicsP
   PositionY =y;
 }
 
-void FigureBase::mousePressEvent(QGraphicsSceneMouseEvent *)
+void FigureBase::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    m_translatePoint = mapToScene(event->pos()) - pos();
+    setZValue(1);
     setCursor(Qt::ClosedHandCursor);
+    emit figureSelected(PositionX,PositionY);
 }
 
 void FigureBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *)
 {
+    setZValue(0);
     setCursor(Qt::OpenHandCursor);
+    emit figureDeselected();
 }
 
 void FigureBase::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    this->setPos(event->pos());
+    this->setPos(mapToScene(event->pos()) - m_translatePoint);
 }
