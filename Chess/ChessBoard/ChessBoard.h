@@ -17,6 +17,7 @@ public:
 private:
   bool validateMoveInOneDirection(int idxFigure,int xPos, int yPos);
   void CleanScene();
+  QVector<QPair<int,int>> m_availableMoves;
 public slots:
     void validMoves(int PositionX, int PositionY);
     void clearMoves();

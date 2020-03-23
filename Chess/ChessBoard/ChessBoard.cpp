@@ -102,8 +102,14 @@ void ChessBoard::setNewPosition(int PositionX, int PositionY)
           {
               if (m_boxes.at(j)->isUnderMouse())
                 {
-                  if (m_figures.at(i)->ValidatePosition(m_boxes.at(j)->PositionX, m_boxes.at(j)->PositionY)
-                       && !m_boxes.at(j)->m_bHasFigure)
+                  QPair<int,int> xyPos =QPair<int,int>(m_boxes.at(j)->PositionX,m_boxes.at(j)->PositionY);
+                  bool valid = false;
+                  for (int l=0; l< m_availableMoves.count();l++)
+                    {
+                      if (m_availableMoves.at(l) == xyPos)
+                        valid = true;
+                    }
+                  if (valid)
                      {
                        m_figures.at(i)->setPos(m_boxes.at(j)->pos());
                        m_figures.at(i)->m_positionX = m_boxes.at(j)->PositionX;
@@ -141,58 +147,86 @@ void ChessBoard::setNewPosition(int PositionX, int PositionY)
 
 void ChessBoard::validMoves(int positionX, int positionY)
 {
-
+  m_availableMoves.clear();
   for (int i =0; i < m_figures.count(); ++i)
     {
       if (m_figures.at(i)->m_positionX == positionX && m_figures.at(i)->m_positionY == positionY)
         {
-          bool bBreake = false;
+          bool bLeftUp = true;
+          bool bUp = true;
+          bool bRightUp = true;
+          bool bLeft = true;
+          bool bRight = true;
+          bool bLeftDown = true;
+          bool bDown = true;
+          bool bRightDown = true;
           for (int x=positionX;x<8;++x)
           {
               for (int y=positionY; y<8;++y)
               {
                   if (x == positionX && y == positionY)
                     continue;
-                  if (!validateMoveInOneDirection(i,x,y)) bBreake = true;
-                  if (bBreake) break;
+                  if (!bDown && x== positionX)
+                    continue;
+                  if (!bRight && y == positionY)
+                    continue;
+                  if (!bRightDown && x!= positionX && y!=positionY)
+                    continue;
+                  if (!validateMoveInOneDirection(i,x,y))
+                    {
+                      if (x== positionX)
+                        bDown = false;
+                      else if (y== positionY)
+                        bRight = false;
+                      else bRightDown = false;
+                    }
               }
-              if (bBreake) break;
           }
-          bBreake = false;
           for (int x=positionX;x<8;++x)
           {
-              for (int y=positionY; y>=0;--y)
+              for (int y=positionY-1; y>=0;--y)
               {
-                  if (x == positionX && y == positionY)
+                  if (!bUp && x== positionX)
                     continue;
-                  if (!validateMoveInOneDirection(i,x,y)) bBreake = true;
-                  if (bBreake) break;
+                  if (!bRightUp && x!= positionX)
+                    continue;
+                  if (!validateMoveInOneDirection(i,x,y))
+                    {
+                      if (x== positionX)
+                        bUp = false;
+                      else
+                        bRightUp = false;
+                    }
               }
-              if (bBreake) break;
           }
-          bBreake = false;
-          for (int x=positionX;x>=0;--x)
+          for (int x=positionX-1;x>=0;--x)
           {
               for (int y=positionY; y<8;++y)
               {
-                  if (x == positionX && y == positionY)
+                  if (!bLeft && y== positionY)
                     continue;
-                  if (!validateMoveInOneDirection(i,x,y)) bBreake = true;
-                  if (bBreake) break;
+                  if (!bLeftDown && y!=positionY)
+                    continue;
+                  if (!validateMoveInOneDirection(i,x,y))
+                    {
+                      if (y== positionY)
+                        bLeft = false;
+                      else
+                        bLeftDown = false;
+                    }
               }
-              if (bBreake) break;
           }
-          bBreake = false;
-          for (int x=positionX;x>=0;--x)
+          for (int x=positionX-1;x>=0;--x)
           {
-              for (int y=positionY; y>=0;--y)
+              for (int y=positionY-1; y>=0;--y)
               {
-                  if (x == positionX && y == positionY)
+                  if (!bLeftUp)
                     continue;
-                  if (!validateMoveInOneDirection(i,x,y)) bBreake = true;
-                  if (bBreake) break;
+                  if (!validateMoveInOneDirection(i,x,y))
+                    {
+                        bLeftUp = false;
+                    }
               }
-              if (bBreake) break;
           }
           break;
         }
@@ -209,6 +243,7 @@ bool ChessBoard::validateMoveInOneDirection(int idxFigure,int xPos, int yPos)
             if (m_figures.at(idxFigure)->ValidatePosition(m_boxes.at(j)->PositionX, m_boxes.at(j)->PositionY)
                 && !m_boxes.at(j)->m_bHasFigure)
               {
+                m_availableMoves.append(QPair<int,int>(xPos,yPos));
                 m_boxes.at(j)->setBrush(Qt::green);
                 return true;
               }
