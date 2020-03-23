@@ -15,12 +15,16 @@ public:
   ChessBoardSidePanel* m_panelRight;
   QList<FigureBase*> m_figures;
 private:
-  bool validateMoveInOneDirection(FigureBase* figure,int xPos, int yPos);
+  bool validateMoveInOneDirection(FigureBase* figure,int xPos, int yPos, bool enemy = false);
   void CleanScene();
   QVector<QPair<int,int>> m_availableMoves;
+  QVector<QPair<int,int>> m_enemyAvailableMoves;
   ChessBoardBox* getBoxAtPosition(int positionX, int positionY);
   ChessBoardBox* getBoxUnderMouse();
   FigureBase* getFigureAtPosition(int positionX, int positionY);
+  void setAllValidMoves(int positionX, int positionY, bool enemy = false);
+  void setColorForBoxes();
+
 public slots:
     void validMoves(int positionX, int positionY);
     void clearMoves();

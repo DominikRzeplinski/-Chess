@@ -12,9 +12,10 @@ FigureBase::FigureBase(bool side,int x, int y, QGraphicsItem *parent):QGraphicsP
 {
   setCursor(Qt::OpenHandCursor);
   setAcceptedMouseButtons(Qt::LeftButton);
-  LeftSide = side;
+  m_leftSide = side;
   m_positionX =x;
   m_positionY =y;
+  m_firstMove = true;
 }
 
 void FigureBase::mousePressEvent(QGraphicsSceneMouseEvent *event)

@@ -12,11 +12,12 @@ public:
   int m_positionX;
   int m_positionY;
   bool m_stopOnOtherFigure;
+  bool m_firstMove;
+  bool m_leftSide;
 protected:
   void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
   void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
   void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
-  bool LeftSide;
   bool m_dragOver = false;
   QImage m_image;
   QColor color;

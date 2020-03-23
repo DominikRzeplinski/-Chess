@@ -16,9 +16,24 @@ FigurePawn::FigurePawn(bool side,int x, int y,QGraphicsItem *parent):FigureBase(
   m_stopOnOtherFigure = true;
 }
 
-bool FigurePawn::ValidatePosition(int PositionX, int PositionY)
+bool FigurePawn::ValidatePosition(int positionX, int positionY)
 {
-  if (qFabs(m_positionX - PositionX) == 1 && (m_positionY == PositionY))
+  if (m_leftSide)
+    {
+      if (positionX < m_positionX)
+        return false;
+    }
+  else
+    {
+      if (positionX > m_positionX)
+        return false;
+    }
+
+  if (qFabs(m_positionX - positionX) == 1 && (m_positionY == positionY))
     return true;
+
+  if (qFabs(m_positionX - positionX) == 2 && (m_positionY == positionY) && m_firstMove)
+    return true;
+
   return false;
 }
