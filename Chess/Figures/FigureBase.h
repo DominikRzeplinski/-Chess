@@ -24,6 +24,7 @@ protected:
 signals:
     void figureSelected(int PositionX, int PositionY);
     void figureDeselected();
+    void figureMoved(int PositionX, int PositionY);
 };
 
 #endif // FIGUREBASE_H

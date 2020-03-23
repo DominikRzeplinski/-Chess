@@ -81,6 +81,8 @@ void ChessBoard::Reset()
                                this, &ChessBoard::validMoves);
           QObject::connect(figureBase, &FigureBase::figureDeselected,
                                this, &ChessBoard::clearMoves);
+          QObject::connect(figureBase, &FigureBase::figureMoved,
+                               this, &ChessBoard::setNewPosition);
           }
 
           m_boxes.append(box);
@@ -88,6 +90,53 @@ void ChessBoard::Reset()
   }
   m_panelLeft = new ChessBoardSidePanel();
   m_panelRight = new ChessBoardSidePanel(false);
+}
+
+void ChessBoard::setNewPosition(int PositionX, int PositionY)
+{
+  for (int i =0; i < m_figures.count(); ++i)
+    {
+      if (m_figures.at(i)->m_positionX == PositionX && m_figures.at(i)->m_positionY == PositionY)
+        {
+          for (int j=0; j < m_boxes.count(); ++j)
+          {
+              if (m_boxes.at(j)->isUnderMouse())
+                {
+                  if (m_figures.at(i)->ValidatePosition(m_boxes.at(j)->PositionX, m_boxes.at(j)->PositionY)
+                       && !m_boxes.at(j)->m_bHasFigure)
+                     {
+                       m_figures.at(i)->setPos(m_boxes.at(j)->pos());
+                       m_figures.at(i)->m_positionX = m_boxes.at(j)->PositionX;
+                       m_figures.at(i)->m_positionY = m_boxes.at(j)->PositionY;
+                       m_boxes.at(j)->m_bHasFigure = true;
+                       for (int k=0; k< m_boxes.count();++k)
+                         {
+                           if (m_boxes.at(k)->PositionX == PositionX && m_boxes.at(k)->PositionY == PositionY)
+                           {
+                              m_boxes.at(k)->m_bHasFigure = false;
+                              break;
+                           }
+                         }
+                     }
+                  else
+                    {
+                      for (int k=0; k< m_boxes.count();++k)
+                        {
+                          if (m_boxes.at(k)->PositionX == PositionX && m_boxes.at(k)->PositionY == PositionY)
+                          {
+                             m_figures.at(i)->setPos(m_boxes.at(k)->pos());
+                             break;
+                          }
+                        }
+
+                    }
+                  break;
+                }
+          }
+          break;
+        }
+    }
+
 }
 
 void ChessBoard::validMoves(int positionX, int positionY)

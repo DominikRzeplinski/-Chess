@@ -30,6 +30,7 @@ void FigureBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *)
     setZValue(0);
     setCursor(Qt::OpenHandCursor);
     emit figureDeselected();
+    emit figureMoved(m_positionX,m_positionY);
 }
 
 void FigureBase::mouseMoveEvent(QGraphicsSceneMouseEvent *event)

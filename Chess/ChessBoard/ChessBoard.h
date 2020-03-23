@@ -20,6 +20,7 @@ private:
 public slots:
     void validMoves(int PositionX, int PositionY);
     void clearMoves();
+    void setNewPosition(int PositionX, int PositionY);
 };
 
 #endif // CHESSBOARD_H
