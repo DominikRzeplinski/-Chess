@@ -8,6 +8,7 @@ class FigureQueen: public FigureBase
 public:
   FigureQueen(bool side = true, int x =0, int y =0,QGraphicsItem *parent =0);
   bool ValidatePosition(int PositionX, int PositionY);
+  bool ValidateStrikePosition(int PositionX, int PositionY);
 };
 
 #endif // FIGUREQUEEN_H

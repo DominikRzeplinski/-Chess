@@ -26,6 +26,9 @@ void ChessBoard::CleanScene()
   m_panelLeft = NULL;
   m_panelRight = NULL;
   m_availableMoves.clear();
+  m_availableStrikeMoves.clear();
+  m_enemyAvailableMoves.clear();
+  m_enemyAvailableStrikeMoves.clear();
 }
 
 void ChessBoard::Reset()
@@ -256,7 +259,8 @@ void ChessBoard::setAllValidMoves(int positionX, int positionY, bool enemy)
        if (!enemy)
          {
        //Special moves
-       if ((figure->m_positionX == 0 || figure->m_positionX==7) && figure->m_positionY == 4)
+       FigureKing * king = dynamic_cast<FigureKing*>(figure);
+       if (king)
          {
            //castling
            if (figure->m_firstMove)
@@ -272,7 +276,16 @@ void ChessBoard::setAllValidMoves(int positionX, int positionY, bool enemy)
                        bool enamyAttack = false;
                         for (int i =0; i < m_enemyAvailableMoves.count();i++)
                           {
-                            if (m_enemyAvailableMoves.at(i) == QPair<int,int>(xPosOfRock,2) || m_enemyAvailableMoves.at(i) == QPair<int,int>(xPosOfRock,3))
+                            if (m_enemyAvailableMoves.at(i) == QPair<int,int>(xPosOfRock,2) || m_enemyAvailableMoves.at(i) == QPair<int,int>(xPosOfRock,3) )
+                              {
+                                enamyAttack = true;
+                                break;
+                              }
+                          }
+
+                        for (int i =0; i < m_enemyAvailableStrikeMoves.count();i++)
+                          {
+                            if (m_enemyAvailableStrikeMoves.at(i) == QPair<int,int>(king->m_positionX,king->m_positionY))
                               {
                                 enamyAttack = true;
                                 break;
@@ -291,7 +304,15 @@ void ChessBoard::setAllValidMoves(int positionX, int positionY, bool enemy)
                                       bool enamyAttack = false;
                                        for (int i =0; i < m_enemyAvailableMoves.count();i++)
                                          {
-                                           if (m_enemyAvailableMoves.at(i) == QPair<int,int>(xPosOfRock,5) || m_enemyAvailableMoves.at(i) == QPair<int,int>(xPosOfRock,6))
+                                           if (m_enemyAvailableMoves.at(i) == QPair<int,int>(xPosOfRock,5) || m_enemyAvailableMoves.at(i) == QPair<int,int>(xPosOfRock,6) ||m_enemyAvailableMoves.at(i)== QPair<int,int>(king->m_positionX,king->m_positionY))
+                                             {
+                                               enamyAttack = true;
+                                               break;
+                                             }
+                                         }
+                                       for (int i =0; i < m_enemyAvailableStrikeMoves.count();i++)
+                                         {
+                                           if (m_enemyAvailableStrikeMoves.at(i) == QPair<int,int>(king->m_positionX,king->m_positionY))
                                              {
                                                enamyAttack = true;
                                                break;
@@ -313,6 +334,14 @@ void ChessBoard::setAllValidMoves(int positionX, int positionY, bool enemy)
                      m_availableMoves.remove(j);
                  }
              }
+           for (int i =0; i < m_enemyAvailableStrikeMoves.count(); i++)
+             {
+               for (int j=0; j < m_availableStrikeMoves.count();j++)
+                 {
+                   if( m_availableStrikeMoves.at(j) == m_enemyAvailableStrikeMoves.at(i))
+                     m_availableStrikeMoves.remove(j);
+                 }
+             }
          }
          }
     }
@@ -326,6 +355,7 @@ void ChessBoard::validMoves(int positionX, int positionY)
   if (figure)
     {
       m_enemyAvailableMoves.clear();
+      m_enemyAvailableStrikeMoves.clear();
       for (int i=0; i< m_figures.count();++i)
         {
           if (m_figures.at(i)->m_leftSide != figure->m_leftSide)
@@ -333,6 +363,7 @@ void ChessBoard::validMoves(int positionX, int positionY)
         }
     }
   m_availableMoves.clear();
+  m_availableStrikeMoves.clear();
   setAllValidMoves(positionX,positionY);
   setColorForBoxes();
 
@@ -342,6 +373,9 @@ void ChessBoard::setColorForBoxes()
 {
   for (int i=0; i < m_availableMoves.count(); i++)
     getBoxAtPosition(m_availableMoves.at(i).first,m_availableMoves.at(i).second)->setBrush(Qt::green);
+  for (int i=0; i< m_availableStrikeMoves.count(); i++)
+    getBoxAtPosition(m_availableStrikeMoves.at(i).first,m_availableStrikeMoves.at(i).second)->setBrush(Qt::red);
+
 }
 
 bool ChessBoard::validateMoveInOneDirection(FigureBase* figure,int xPos, int yPos, bool enemy)
@@ -349,6 +383,13 @@ bool ChessBoard::validateMoveInOneDirection(FigureBase* figure,int xPos, int yPo
   ChessBoardBox* box = getBoxAtPosition(xPos,yPos);
   if (box!= NULL)
     {
+      if (figure->ValidateStrikePosition(box->PositionX, box->PositionY) && box->m_bHasFigure)
+        {
+          if (enemy)
+            m_enemyAvailableStrikeMoves.append(QPair<int,int>(xPos,yPos));
+          else if (getFigureAtPosition(box->PositionX,box->PositionY)->m_leftSide != figure->m_leftSide)
+            m_availableStrikeMoves.append(QPair<int,int>(xPos,yPos));
+        }
         if (figure->ValidatePosition(box->PositionX, box->PositionY)
             && !box->m_bHasFigure)
         {

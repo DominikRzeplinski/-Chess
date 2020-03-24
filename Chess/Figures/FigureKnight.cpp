@@ -22,3 +22,8 @@ bool FigureKnight::ValidatePosition(int PositionX, int PositionY)
     return true;
   return false;
 }
+
+bool FigureKnight::ValidateStrikePosition(int PositionX, int PositionY)
+{
+  return ValidatePosition(PositionX,PositionY);
+}

@@ -18,7 +18,9 @@ private:
   bool validateMoveInOneDirection(FigureBase* figure,int xPos, int yPos, bool enemy = false);
   void CleanScene();
   QVector<QPair<int,int>> m_availableMoves;
+  QVector<QPair<int,int>> m_availableStrikeMoves;
   QVector<QPair<int,int>> m_enemyAvailableMoves;
+  QVector<QPair<int,int>> m_enemyAvailableStrikeMoves;
   ChessBoardBox* getBoxAtPosition(int positionX, int positionY);
   ChessBoardBox* getBoxUnderMouse();
   FigureBase* getFigureAtPosition(int positionX, int positionY);

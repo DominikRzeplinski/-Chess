@@ -23,3 +23,8 @@ bool FigureBishop::ValidatePosition(int positionX, int positionY)
 
   return false ;
 }
+
+bool FigureBishop::ValidateStrikePosition(int PositionX, int PositionY)
+{
+  return ValidatePosition(PositionX,PositionY);
+}

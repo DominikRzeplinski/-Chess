@@ -26,3 +26,8 @@ bool FigureQueen::ValidatePosition(int PositionX, int PositionY)
 
   return false;
 }
+
+bool FigureQueen::ValidateStrikePosition(int PositionX, int PositionY)
+{
+  return ValidatePosition(PositionX,PositionY);
+}

@@ -8,6 +8,7 @@ class FigureRook: public FigureBase
 public:
   FigureRook(bool side = true, int x =0, int y =0,QGraphicsItem *parent =0);
   bool ValidatePosition(int PositionX, int PositionY);
+  bool ValidateStrikePosition(int PositionX, int PositionY);
 };
 
 #endif // FIGUREROOK_H

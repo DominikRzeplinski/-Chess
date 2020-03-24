@@ -22,3 +22,8 @@ bool FigureKing::ValidatePosition(int PositionX, int PositionY)
     return true;
   return false;
 }
+
+bool FigureKing::ValidateStrikePosition(int PositionX, int PositionY)
+{
+  return ValidatePosition(PositionX,PositionY);
+}

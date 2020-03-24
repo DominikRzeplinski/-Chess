@@ -18,16 +18,8 @@ FigurePawn::FigurePawn(bool side,int x, int y,QGraphicsItem *parent):FigureBase(
 
 bool FigurePawn::ValidatePosition(int positionX, int positionY)
 {
-  if (m_leftSide)
-    {
-      if (positionX < m_positionX)
-        return false;
-    }
-  else
-    {
-      if (positionX > m_positionX)
-        return false;
-    }
+  if (!moveEnemyDirection(positionX))
+    return false;
 
   if (qFabs(m_positionX - positionX) == 1 && (m_positionY == positionY))
     return true;
@@ -36,4 +28,28 @@ bool FigurePawn::ValidatePosition(int positionX, int positionY)
     return true;
 
   return false;
+}
+
+bool FigurePawn::ValidateStrikePosition(int PositionX, int PositionY)
+{
+  if (!moveEnemyDirection(PositionX))
+    return false;
+  if (qFabs(m_positionX - PositionX) == 1 && qFabs(m_positionY - PositionY) ==1)
+    return true;
+  return false;
+}
+
+bool FigurePawn::moveEnemyDirection(int PositionX)
+{
+  if (m_leftSide)
+    {
+      if (PositionX < m_positionX)
+        return false;
+    }
+  else
+    {
+      if (PositionX > m_positionX)
+        return false;
+    }
+  return true;
 }
