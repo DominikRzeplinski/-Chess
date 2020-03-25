@@ -15,6 +15,7 @@ public:
   bool m_stopOnOtherFigure;
   bool m_firstMove;
   bool m_leftSide;
+  static bool m_leftSideTurn;
 protected:
   void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
   void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;

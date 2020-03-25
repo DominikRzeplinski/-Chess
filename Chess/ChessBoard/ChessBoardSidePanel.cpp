@@ -8,5 +8,17 @@ ChessBoardSidePanel::ChessBoardSidePanel(bool left, QGraphicsItem *parent):QGrap
     setPos(0,0);
   else
     setPos(600,0);
+  leftSifde = left;
   setBrush(Qt::white);
+  freeSlot = 0;
 }
+
+void ChessBoardSidePanel::SetSlotPos()
+{
+  freeSlot ++;
+}
+QPointF ChessBoardSidePanel::GetFreeSlotPos()
+{
+  return QPointF(leftSifde ? 0:600,freeSlot * 50);
+}
+

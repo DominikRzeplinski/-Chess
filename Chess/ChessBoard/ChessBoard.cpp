@@ -7,6 +7,7 @@
 #include "Figures/FigureRook.h"
 #include <QGraphicsScene>
 #include "QtMath"
+#include "QCursor"
 
 ChessBoard::ChessBoard()
 {
@@ -107,13 +108,19 @@ void ChessBoard::setNewPosition(int positionX, int positionY)
               if (box != NULL)
                 {
                   QPair<int,int> xyPos =QPair<int,int>(box->PositionX,box->PositionY);
-                  bool valid = false;
+                  bool validMove = false;
                   for (int l=0; l< m_availableMoves.count();l++)
                     {
                       if (m_availableMoves.at(l) == xyPos)
-                        valid = true;
+                        validMove = true;
                     }
-                  if (valid)
+                  bool validStrike = false;
+                  for (int l=0; l< m_availableStrikeMoves.count();l++)
+                    {
+                      if (m_availableStrikeMoves.at(l) == xyPos)
+                        validStrike = true;
+                    }
+                  if (validMove)
                      {
                        //castling
                        if ((figure->m_positionX ==0 ||figure->m_positionX ==7) && qFabs(figure->m_positionY -box->PositionY) == 2 && figure->m_positionY == 4)
@@ -158,7 +165,36 @@ void ChessBoard::setNewPosition(int positionX, int positionY)
                               boxPrv->m_bHasFigure = false;
 
                          }
+                       figure->m_leftSideTurn = !figure->m_leftSideTurn;
                      }
+                  else if (validStrike)
+                    {
+                      FigureBase * killedFigure = getFigureAtPosition(box->PositionX,box->PositionY);
+                      if (killedFigure->m_leftSide)
+                        {
+                        killedFigure->setPos(m_panelLeft->GetFreeSlotPos());
+                        m_panelLeft->SetSlotPos();
+                        }
+                      else
+                        {
+                        killedFigure->setPos(m_panelRight->GetFreeSlotPos());
+                        m_panelRight->SetSlotPos();
+                        }
+                      killedFigure->m_positionX = -1;
+                      killedFigure->m_positionY = -1;
+                      killedFigure->setAcceptedMouseButtons(Qt::NoButton);
+                      killedFigure->setCursor(Qt::ArrowCursor);
+                      figure->setPos(box->pos());
+                      figure->m_positionX = box->PositionX;
+                      figure->m_positionY = box->PositionY;
+                      figure->m_firstMove = false;
+
+                      box->m_bHasFigure = true;
+                          if (boxPrv!=NULL)
+                             boxPrv->m_bHasFigure = false;
+                          figure->m_leftSideTurn = !figure->m_leftSideTurn;
+
+                    }
                   else
                     {
                           if (boxPrv != NULL)
