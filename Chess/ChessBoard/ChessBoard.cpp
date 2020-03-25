@@ -122,6 +122,8 @@ void ChessBoard::setNewPosition(int positionX, int positionY)
                     }
                   if (validMove)
                      {
+
+                        FigurePawn * pawn = dynamic_cast<FigurePawn*>(figure);
                        //castling
                        if ((figure->m_positionX ==0 ||figure->m_positionX ==7) && qFabs(figure->m_positionY -box->PositionY) == 2 && figure->m_positionY == 4)
                          {
@@ -153,6 +155,24 @@ void ChessBoard::setNewPosition(int positionX, int positionY)
                              }
 
                          }
+                       else if(pawn && qFabs(pawn->m_positionX - box->PositionX) == 2 )
+                         {
+                           figure->setPos(box->pos());
+                           figure->m_positionX = box->PositionX;
+                           figure->m_positionY = box->PositionY;
+                           figure->m_firstMove = false;
+
+                           box->m_bHasFigure = true;
+                               if (boxPrv!=NULL)
+                                  boxPrv->m_bHasFigure = false;
+                           if (pawn->m_leftSide)
+                             {
+                               getBoxAtPosition(pawn->m_positionX -1,pawn->m_positionY)->m_bHasFigure = true;
+                             }
+                             else {
+                               getBoxAtPosition(pawn->m_positionX +1,pawn->m_positionY)->m_bHasFigure = true;
+                             }
+                         }
                        else
                          {
                        figure->setPos(box->pos());
@@ -170,6 +190,14 @@ void ChessBoard::setNewPosition(int positionX, int positionY)
                   else if (validStrike)
                     {
                       FigureBase * killedFigure = getFigureAtPosition(box->PositionX,box->PositionY);
+                      //elPassa
+                      if (!killedFigure)
+                        {
+                          if(figure->m_leftSide)
+                            killedFigure =  getFigureAtPosition(box->PositionX-1,box->PositionY);
+                          else
+                            killedFigure =  getFigureAtPosition(box->PositionX+1,box->PositionY);
+                        }
                       if (killedFigure->m_leftSide)
                         {
                         killedFigure->setPos(m_panelLeft->GetFreeSlotPos());
@@ -202,6 +230,18 @@ void ChessBoard::setNewPosition(int positionX, int positionY)
                              figure->setPos(boxPrv->pos());
                         }
 
+                    }
+                  if (validMove || validStrike)
+                    {
+                      //remove el Passa
+                      int x=5;
+                      if (!figure->m_leftSide)
+                        x =2;
+                          for (int y=0; y<8; y++)
+                            {
+                              if (getFigureAtPosition(x,y) == NULL)
+                                getBoxAtPosition(x,y)->m_bHasFigure=false;
+                            }
                     }
                 }
         }
@@ -423,7 +463,9 @@ bool ChessBoard::validateMoveInOneDirection(FigureBase* figure,int xPos, int yPo
         {
           if (enemy)
             m_enemyAvailableStrikeMoves.append(QPair<int,int>(xPos,yPos));
-          else if (getFigureAtPosition(box->PositionX,box->PositionY)->m_leftSide != figure->m_leftSide)
+          else if (getFigureAtPosition(box->PositionX,box->PositionY) && getFigureAtPosition(box->PositionX,box->PositionY)->m_leftSide != figure->m_leftSide)
+            m_availableStrikeMoves.append(QPair<int,int>(xPos,yPos));
+          else if (!getFigureAtPosition(box->PositionX,box->PositionY) && ((figure->m_leftSide && xPos == 5) || (!figure->m_leftSide && xPos == 2)))
             m_availableStrikeMoves.append(QPair<int,int>(xPos,yPos));
         }
         if (figure->ValidatePosition(box->PositionX, box->PositionY)
