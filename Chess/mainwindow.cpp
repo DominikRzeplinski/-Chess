@@ -68,4 +68,9 @@ void MainWindow::Reset()
   {
     m_sceneChessBoard->addItem(m_chessBoard->m_figures.at(i));
   }
+  m_sceneChessBoard->addItem(m_chessBoard->m_promotion);
+  for(int i=0; i< m_chessBoard->m_promotionFigures.count();++i)
+    {
+      m_sceneChessBoard->addItem(m_chessBoard->m_promotionFigures.at(i));
+    }
 }

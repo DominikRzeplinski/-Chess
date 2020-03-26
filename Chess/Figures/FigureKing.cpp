@@ -1,7 +1,7 @@
 #include "FigureKing.h"
 #include "QtMath"
 
-FigureKing::FigureKing(bool side,int x, int y,QGraphicsItem *parent):FigureBase(side,x,y,parent)
+FigureKing::FigureKing(bool side,FigureType type,int x, int y,QGraphicsItem *parent):FigureBase(side,type,x,y,parent)
 {
   if (side)
   {

@@ -1,7 +1,7 @@
 #include "FigurePawn.h"
 #include "QtMath"
 
-FigurePawn::FigurePawn(bool side,int x, int y,QGraphicsItem *parent):FigureBase(side,x,y,parent)
+FigurePawn::FigurePawn(bool side,FigureType type,int x, int y,QGraphicsItem *parent):FigureBase(side,type,x,y,parent)
 {
   if(side)
   {
@@ -52,4 +52,11 @@ bool FigurePawn::moveEnemyDirection(int PositionX)
         return false;
     }
   return true;
+}
+
+void FigurePawn::Promote()
+{
+  QGraphicsRectItem *promoteScene = new QGraphicsRectItem(0,0,800,600);
+  promoteScene->setOpacity(0.2);
+
 }

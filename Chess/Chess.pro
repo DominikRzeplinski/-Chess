@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     ChessBoard/ChessBoard.cpp \
     ChessBoard/ChessBoardBox.cpp \
+    ChessBoard/ChessBoardPromotion.cpp \
     ChessBoard/ChessBoardScene.cpp \
     ChessBoard/ChessBoardSidePanel.cpp \
     Figures/FigureBase.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
 HEADERS += \
     ChessBoard/ChessBoard.h \
     ChessBoard/ChessBoardBox.h \
+    ChessBoard/ChessBoardPromotion.h \
     ChessBoard/ChessBoardScene.h \
     ChessBoard/ChessBoardSidePanel.h \
     Figures/FigureBase.h \

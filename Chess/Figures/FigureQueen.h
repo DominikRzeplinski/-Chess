@@ -6,7 +6,7 @@
 class FigureQueen: public FigureBase
 {
 public:
-  FigureQueen(bool side = true, int x =0, int y =0,QGraphicsItem *parent =0);
+  FigureQueen(bool side = true,FigureType type = FigureType::Alive, int x =0, int y =0,QGraphicsItem *parent =0);
   bool ValidatePosition(int PositionX, int PositionY);
   bool ValidateStrikePosition(int PositionX, int PositionY);
 };

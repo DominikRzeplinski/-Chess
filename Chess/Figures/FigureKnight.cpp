@@ -1,7 +1,7 @@
 #include "FigureKnight.h"
 #include "QtMath"
 
-FigureKnight::FigureKnight(bool side,int x, int y,QGraphicsItem *parent):FigureBase(side,x,y,parent)
+FigureKnight::FigureKnight(bool side,FigureType type,int x, int y,QGraphicsItem *parent):FigureBase(side,type,x,y,parent)
 {
   if(side)
   {

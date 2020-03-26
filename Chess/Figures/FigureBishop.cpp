@@ -1,7 +1,7 @@
 #include "FigureBishop.h"
 #include "QtMath"
 
-FigureBishop::FigureBishop(bool side,int x, int y,QGraphicsItem *parent):FigureBase(side,x,y,parent)
+FigureBishop::FigureBishop(bool side,FigureType type,int x, int y,QGraphicsItem *parent):FigureBase(side,type,x,y,parent)
 {
   if (side)
   {

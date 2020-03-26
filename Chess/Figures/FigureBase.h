@@ -3,11 +3,17 @@
 #include "QGraphicsPixmapItem"
 #include "QEvent"
 #include "QObject"
+
+enum class FigureType { Alive,
+                        Killed,
+                        Promotion
+};
+
 class FigureBase :public QObject, public QGraphicsPixmapItem
 {
 Q_OBJECT
 public:
-  FigureBase(bool side = true, int x =0, int y =0, QGraphicsItem *parent = 0);
+  FigureBase(bool side = true, FigureType type = FigureType::Alive, int x =0, int y =0, QGraphicsItem *parent = 0);
   bool virtual ValidatePosition(int PositionX, int PositionY) =0;
   bool virtual ValidateStrikePosition(int PositionX, int PositionY) =0;
   int m_positionX;
@@ -16,6 +22,8 @@ public:
   bool m_firstMove;
   bool m_leftSide;
   static bool m_leftSideTurn;
+  static bool m_promotionActive;
+  FigureType m_type;
 protected:
   void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
   void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;

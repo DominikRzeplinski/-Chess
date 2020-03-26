@@ -30,6 +30,8 @@ void ChessBoard::CleanScene()
   m_availableStrikeMoves.clear();
   m_enemyAvailableMoves.clear();
   m_enemyAvailableStrikeMoves.clear();
+  m_promotionFigures.clear();
+  m_promotionActive= false;
 }
 
 void ChessBoard::Reset()
@@ -49,36 +51,36 @@ void ChessBoard::Reset()
           if (x ==0 )
           {
               if (y == 0 || y == 7)
-                figureBase = new FigureRook(true, x,y);
+                figureBase = new FigureRook(true,FigureType::Alive, x,y);
               if (y==1 || y== 6)
-                figureBase = new FigureKnight(true, x,y);
+                figureBase = new FigureKnight(true,FigureType::Alive, x,y);
               if (y==2 || y==5)
-                figureBase = new FigureBishop(true, x,y);
+                figureBase = new FigureBishop(true,FigureType::Alive, x,y);
               if (y ==3)
-                figureBase = new FigureQueen(true,x,y);
+                figureBase = new FigureQueen(true,FigureType::Alive,x,y);
               if (y==4)
-                figureBase = new FigureKing(true,x,y);
+                figureBase = new FigureKing(true,FigureType::Alive,x,y);
           }
           else if (x == 1)
           {
-              figureBase = new FigurePawn(true,x,y);
+              figureBase = new FigurePawn(true,FigureType::Alive,x,y);
           }
           else if (x == 6)
           {
-              figureBase = new FigurePawn(false,x,y);
+              figureBase = new FigurePawn(false,FigureType::Alive,x,y);
           }
           else if (x == 7)
           {
               if (y == 0 || y == 7)
-                figureBase = new FigureRook(false, x,y);
+                figureBase = new FigureRook(false,FigureType::Alive, x,y);
               if (y==1 || y== 6)
-                figureBase = new FigureKnight(false, x,y);
+                figureBase = new FigureKnight(false,FigureType::Alive, x,y);
               if (y==2 || y==5)
-                figureBase = new FigureBishop(false, x,y);
+                figureBase = new FigureBishop(false,FigureType::Alive, x,y);
               if (y ==3)
-                figureBase = new FigureQueen(false,x,y);
+                figureBase = new FigureQueen(false,FigureType::Alive,x,y);
               if (y==4)
-                figureBase = new FigureKing(false,x,y);
+                figureBase = new FigureKing(false,FigureType::Alive,x,y);
 
           }
           figureBase->setPos(box->pos());
@@ -96,6 +98,80 @@ void ChessBoard::Reset()
   }
   m_panelLeft = new ChessBoardSidePanel();
   m_panelRight = new ChessBoardSidePanel(false);
+  m_promotion = new ChessBoardPromotion();
+  for (int i =0 ; i <8; ++i)
+    {
+  figureBase = new FigureQueen(true,FigureType::Promotion, -2,-1);
+  figureBase->setPos(300,250);
+  figureBase->hide();
+  QObject::connect(figureBase, &FigureBase::figureSelected,
+                       this, &ChessBoard::validMoves);
+  m_promotionFigures.append(figureBase);
+    }
+  for (int i =0 ; i <8; ++i)
+    {
+  figureBase = new FigureBishop(true,FigureType::Promotion, -2,-2);
+  figureBase->setPos(350,250);
+  figureBase->hide();
+  QObject::connect(figureBase, &FigureBase::figureSelected,
+                       this, &ChessBoard::validMoves);
+  m_promotionFigures.append(figureBase);
+    }
+  for (int i =0 ; i <8; ++i)
+    {
+  figureBase = new FigureKnight(true,FigureType::Promotion, -2,-3);
+  figureBase->setPos(400,250);
+  figureBase->hide();
+  QObject::connect(figureBase, &FigureBase::figureSelected,
+                       this, &ChessBoard::validMoves);
+  m_promotionFigures.append(figureBase);
+    }
+  for (int i =0 ; i <8; ++i)
+    {
+  figureBase = new FigureRook(true,FigureType::Promotion, -2,-4);
+  figureBase->setPos(450,250);
+  figureBase->hide();
+  QObject::connect(figureBase, &FigureBase::figureSelected,
+                       this, &ChessBoard::validMoves);
+  m_promotionFigures.append(figureBase);
+    }
+  for (int i =0 ; i <8; ++i)
+    {
+  figureBase = new FigureQueen(false,FigureType::Promotion, -3,-1);
+  figureBase->setPos(300,250);
+  figureBase->hide();
+  QObject::connect(figureBase, &FigureBase::figureSelected,
+                       this, &ChessBoard::validMoves);
+  m_promotionFigures.append(figureBase);
+    }
+  for (int i =0 ; i <8; ++i)
+    {
+  figureBase = new FigureBishop(false,FigureType::Promotion, -3,-2);
+  figureBase->setPos(350,250);
+  figureBase->hide();
+  QObject::connect(figureBase, &FigureBase::figureSelected,
+                       this, &ChessBoard::validMoves);
+  m_promotionFigures.append(figureBase);
+    }
+  for (int i =0 ; i <8; ++i)
+    {
+  figureBase = new FigureKnight(false,FigureType::Promotion, -3,-3);
+  figureBase->setPos(400,250);
+  figureBase->hide();
+  QObject::connect(figureBase, &FigureBase::figureSelected,
+                       this, &ChessBoard::validMoves);
+  m_promotionFigures.append(figureBase);
+    }
+  for (int i =0 ; i <8; ++i)
+    {
+  figureBase = new FigureRook(false,FigureType::Promotion, -3,-4);
+  figureBase->setPos(450,250);
+  figureBase->hide();
+  QObject::connect(figureBase, &FigureBase::figureSelected,
+                       this, &ChessBoard::validMoves);
+  m_promotionFigures.append(figureBase);
+    }
+
 }
 
 void ChessBoard::setNewPosition(int positionX, int positionY)
@@ -120,12 +196,13 @@ void ChessBoard::setNewPosition(int positionX, int positionY)
                       if (m_availableStrikeMoves.at(l) == xyPos)
                         validStrike = true;
                     }
+                  FigurePawn * pawn = dynamic_cast<FigurePawn*>(figure);
                   if (validMove)
                      {
 
-                        FigurePawn * pawn = dynamic_cast<FigurePawn*>(figure);
+                        FigureKing * king = dynamic_cast<FigureKing*>(figure);
                        //castling
-                       if ((figure->m_positionX ==0 ||figure->m_positionX ==7) && qFabs(figure->m_positionY -box->PositionY) == 2 && figure->m_positionY == 4)
+                       if (king && (figure->m_positionX ==0 ||figure->m_positionX ==7) && qFabs(figure->m_positionY -box->PositionY) == 2 && figure->m_positionY == 4)
                          {
                            figure->setPos(box->pos());
                            figure->m_positionX = box->PositionX;
@@ -194,9 +271,15 @@ void ChessBoard::setNewPosition(int positionX, int positionY)
                       if (!killedFigure)
                         {
                           if(figure->m_leftSide)
+                            {
                             killedFigure =  getFigureAtPosition(box->PositionX-1,box->PositionY);
+                            getBoxAtPosition(box->PositionX-1,box->PositionY)->m_bHasFigure = false;
+                            }
                           else
+                            {
                             killedFigure =  getFigureAtPosition(box->PositionX+1,box->PositionY);
+                            getBoxAtPosition(box->PositionX+1,box->PositionY)->m_bHasFigure = false;
+                            }
                         }
                       if (killedFigure->m_leftSide)
                         {
@@ -210,6 +293,7 @@ void ChessBoard::setNewPosition(int positionX, int positionY)
                         }
                       killedFigure->m_positionX = -1;
                       killedFigure->m_positionY = -1;
+                      killedFigure->m_type = FigureType::Killed;
                       killedFigure->setAcceptedMouseButtons(Qt::NoButton);
                       killedFigure->setCursor(Qt::ArrowCursor);
                       figure->setPos(box->pos());
@@ -241,6 +325,20 @@ void ChessBoard::setNewPosition(int positionX, int positionY)
                             {
                               if (getFigureAtPosition(x,y) == NULL)
                                 getBoxAtPosition(x,y)->m_bHasFigure=false;
+                            }
+                       //Promotion
+
+                          if(pawn && ((pawn->m_leftSide && box->PositionX ==7) || (!pawn->m_leftSide && box->PositionX ==0)))
+                            {
+                              m_promotion->show();
+                              for (int i=0;i<m_promotionFigures.count(); i++)
+                                {
+                                  if (m_promotionFigures.at(i)->m_leftSide == pawn->m_leftSide)
+                                    m_promotionFigures.at(i)->show();
+                                }
+                              m_promotionActive = true;
+                              figure->m_leftSideTurn = !figure->m_leftSideTurn;
+
                             }
                     }
                 }
@@ -427,6 +525,56 @@ void ChessBoard::setAllValidMoves(int positionX, int positionY, bool enemy)
 
 void ChessBoard::validMoves(int positionX, int positionY)
 {
+  if (m_promotionActive)
+    {
+      for (int i =0; i< m_promotionFigures.count();i++)
+        {
+          if (m_promotionFigures.at(i)->m_positionX == positionX && m_promotionFigures.at(i)->m_positionY==positionY)
+            {
+              int x =0;
+              if (m_promotionFigures.at(i)->m_leftSide)
+                x =7;
+              for (int y=0;y<8;y++)
+                {
+                  FigurePawn * pawn = dynamic_cast<FigurePawn*>(getFigureAtPosition(x,y));
+                  if (pawn)
+                    {
+                      for (int j=0; j < m_figures.count(); ++j)
+                        {
+                          if (m_figures.at(j) == pawn)
+                            {
+                              m_figures.removeAt(j);
+                              m_promotionFigures.at(i)->setPos(pawn->pos());
+                              m_promotionFigures.at(i)->m_type=FigureType::Alive;
+                              m_promotionFigures.at(i)->m_positionX = pawn->m_positionX;
+                              m_promotionFigures.at(i)->m_positionY = pawn->m_positionY;
+                              m_figures.append(m_promotionFigures.at(i));
+                              QObject::connect(m_promotionFigures.at(i), &FigureBase::figureDeselected,
+                                                   this, &ChessBoard::clearMoves);
+                              QObject::connect(m_promotionFigures.at(i), &FigureBase::figureMoved,
+                                                   this, &ChessBoard::setNewPosition);
+                              m_promotionFigures.removeAt(i);
+                            }
+                        }
+
+                      m_promotionActive = false;
+
+                      m_promotion->hide();
+                      for (int z=0;z<m_promotionFigures.count(); z++)
+                        {
+                          if (m_promotionFigures.at(z)->m_leftSide == pawn->m_leftSide)
+                            m_promotionFigures.at(z)->hide();
+                        }
+                      pawn->m_leftSideTurn = !pawn->m_leftSideTurn;
+                      delete pawn;
+                      break;
+                    }
+                }
+              return ;
+            }
+        }
+      return;
+    }
   FigureBase* figure = getFigureAtPosition(positionX,positionY);
   if (figure)
     {

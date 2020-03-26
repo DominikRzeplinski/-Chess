@@ -1,6 +1,6 @@
 #include "FigureRook.h"
 #include "QtMath"
-FigureRook::FigureRook(bool side,int x, int y,QGraphicsItem *parent):FigureBase(side,x,y,parent)
+FigureRook::FigureRook(bool side,FigureType type,int x, int y,QGraphicsItem *parent):FigureBase(side,type,x,y,parent)
 {
   if (side)
   {

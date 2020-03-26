@@ -10,13 +10,14 @@
 
 bool FigureBase::m_leftSideTurn = true;
 
-FigureBase::FigureBase(bool side,int x, int y, QGraphicsItem *parent):QGraphicsPixmapItem(parent)
+FigureBase::FigureBase(bool side,FigureType type, int x, int y, QGraphicsItem *parent):QGraphicsPixmapItem(parent)
 {
   setCursor(Qt::OpenHandCursor);
   setAcceptedMouseButtons(Qt::LeftButton);
   m_leftSide = side;
   m_positionX =x;
   m_positionY =y;
+  m_type = type;
   m_firstMove = true;
   m_leftSideTurn = true;
 }
@@ -27,6 +28,8 @@ void FigureBase::mousePressEvent(QGraphicsSceneMouseEvent *event)
     {
     return;
     }
+  if (m_type == FigureType::Killed)
+    return;
     m_translatePoint = mapToScene(event->pos()) - pos();
     setZValue(1);
     setCursor(Qt::ClosedHandCursor);
@@ -42,14 +45,16 @@ void FigureBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *)
     setZValue(0);
     setCursor(Qt::OpenHandCursor);
     emit figureDeselected();
+    if (m_type != FigureType::Alive)
+      return;
     emit figureMoved(m_positionX,m_positionY);
 }
 
 void FigureBase::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
   if (m_leftSideTurn != m_leftSide)
-    {
     return;
-    }
+  if (m_type != FigureType::Alive)
+    return;
     this->setPos(mapToScene(event->pos()) - m_translatePoint);
 }
