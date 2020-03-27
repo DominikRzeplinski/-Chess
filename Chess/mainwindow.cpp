@@ -73,4 +73,6 @@ void MainWindow::Reset()
     {
       m_sceneChessBoard->addItem(m_chessBoard->m_promotionFigures.at(i));
     }
+  m_sceneChessBoard->addItem(m_chessBoard->m_playerTextLeft);
+  m_sceneChessBoard->addItem(m_chessBoard->m_playerTextRight);
 }

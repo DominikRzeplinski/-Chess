@@ -13,6 +13,8 @@ ChessBoard::ChessBoard()
 {
   m_panelLeft = NULL;
   m_panelRight = NULL;
+  m_playerTextLeft = NULL;
+  m_playerTextRight = NULL;
   Reset();
 }
 
@@ -32,6 +34,13 @@ void ChessBoard::CleanScene()
   m_enemyAvailableStrikeMoves.clear();
   m_promotionFigures.clear();
   m_promotionActive= false;
+  if (m_playerTextLeft)
+    delete m_playerTextLeft;
+  if (m_playerTextRight)
+    delete m_playerTextRight;
+  m_playerTextLeft = NULL;
+  m_playerTextRight = NULL;
+  m_endOfGame = false;
 }
 
 void ChessBoard::Reset()
@@ -172,10 +181,14 @@ void ChessBoard::Reset()
   m_promotionFigures.append(figureBase);
     }
 
+  m_playerTextLeft = new ChessBoardPlayerText(true);
+  m_playerTextRight = new ChessBoardPlayerText(false);
 }
 
 void ChessBoard::setNewPosition(int positionX, int positionY)
 {
+  if (m_endOfGame)
+    return;
   FigureBase* figure = getFigureAtPosition(positionX, positionY);
       if (figure != NULL)
         {
@@ -340,7 +353,16 @@ void ChessBoard::setNewPosition(int positionX, int positionY)
                               figure->m_leftSideTurn = !figure->m_leftSideTurn;
 
                             }
+
+                          getEnemyAvailableMoves(figure->m_leftSide);
+                          if(checkMat(figure->m_leftSide))
+                            {
+                              setWinner(!figure->m_leftSide);
+                            }
                     }
+
+
+
                 }
         }
 
@@ -525,6 +547,8 @@ void ChessBoard::setAllValidMoves(int positionX, int positionY, bool enemy)
 
 void ChessBoard::validMoves(int positionX, int positionY)
 {
+  if (m_endOfGame)
+    return;
   if (m_promotionActive)
     {
       for (int i =0; i< m_promotionFigures.count();i++)
@@ -577,15 +601,7 @@ void ChessBoard::validMoves(int positionX, int positionY)
     }
   FigureBase* figure = getFigureAtPosition(positionX,positionY);
   if (figure)
-    {
-      m_enemyAvailableMoves.clear();
-      m_enemyAvailableStrikeMoves.clear();
-      for (int i=0; i< m_figures.count();++i)
-        {
-          if (m_figures.at(i)->m_leftSide != figure->m_leftSide)
-              setAllValidMoves(m_figures.at(i)->m_positionX,m_figures.at(i)->m_positionY,true);
-        }
-    }
+      getEnemyAvailableMoves(figure->m_leftSide);
   m_availableMoves.clear();
   m_availableStrikeMoves.clear();
   setAllValidMoves(positionX,positionY);
@@ -668,4 +684,49 @@ FigureBase* ChessBoard::getFigureAtPosition(int positionX, int positionY)
           return m_figures.at(j);
     }
   return NULL;
+}
+
+bool ChessBoard::checkMat(bool leftSide)
+{
+   for (int i=0; i< m_figures.count();++i)
+     {
+       FigureKing *king = dynamic_cast<FigureKing*>(m_figures.at(i));
+       if(king && king->m_leftSide == leftSide)
+        {
+           for (int j=0; j< m_enemyAvailableStrikeMoves.count();++j)
+             {
+               if (king->m_positionX == m_enemyAvailableStrikeMoves.at(j).first && king->m_positionY == m_enemyAvailableStrikeMoves.at(j).second)
+                 return true;
+             }
+         break;
+        }
+     }
+   return false;
+}
+
+void ChessBoard::getEnemyAvailableMoves(bool leftSide)
+{
+  m_enemyAvailableMoves.clear();
+  m_enemyAvailableStrikeMoves.clear();
+  for (int i=0; i< m_figures.count();++i)
+    {
+      if (m_figures.at(i)->m_leftSide != leftSide)
+          setAllValidMoves(m_figures.at(i)->m_positionX,m_figures.at(i)->m_positionY,true);
+    }
+}
+
+void ChessBoard::setWinner(bool leftSide)
+{
+  if (leftSide)
+  {
+    m_playerTextLeft->setPlainText("Winner");
+    m_playerTextLeft->adjustSize();
+  }
+  else {
+      m_playerTextRight->setPlainText("Winner");
+      m_playerTextLeft->adjustSize();
+    }
+  m_endOfGame = true;
+  for (int i=0; i< m_figures.count();++i)
+    m_figures.at(i)->m_type = FigureType::Killed;
 }

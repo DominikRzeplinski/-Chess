@@ -4,6 +4,7 @@
 #include "ChessBoardSidePanel.h"
 #include "Figures/FigureBase.h"
 #include "ChessBoardPromotion.h"
+#include "ChessBoardPlayerText.h"
 
 class ChessBoard :public QObject
 {
@@ -17,6 +18,8 @@ public:
   QList<FigureBase*> m_figures;
   ChessBoardPromotion *m_promotion;
   QList<FigureBase*> m_promotionFigures;
+  ChessBoardPlayerText *m_playerTextLeft;
+  ChessBoardPlayerText *m_playerTextRight;
 
 private:
   bool validateMoveInOneDirection(FigureBase* figure,int xPos, int yPos, bool enemy = false);
@@ -30,7 +33,11 @@ private:
   FigureBase* getFigureAtPosition(int positionX, int positionY);
   void setAllValidMoves(int positionX, int positionY, bool enemy = false);
   void setColorForBoxes();
+  bool checkMat(bool leftSide);
   bool m_promotionActive;
+  bool m_endOfGame;
+  void getEnemyAvailableMoves(bool leftSide);
+  void setWinner(bool leftSide);
 
 public slots:
     void validMoves(int positionX, int positionY);
