@@ -16,6 +16,7 @@ public:
   FigureBase(bool side = true, FigureType type = FigureType::Alive, int x =0, int y =0, QGraphicsItem *parent = 0);
   bool virtual ValidatePosition(int PositionX, int PositionY) =0;
   bool virtual ValidateStrikePosition(int PositionX, int PositionY) =0;
+  void setPosition(QPointF position, int Posx, int Posy);
   int m_positionX;
   int m_positionY;
   bool m_stopOnOtherFigure;

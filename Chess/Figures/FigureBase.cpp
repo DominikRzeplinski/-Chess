@@ -22,6 +22,13 @@ FigureBase::FigureBase(bool side,FigureType type, int x, int y, QGraphicsItem *p
   m_leftSideTurn = true;
 }
 
+void FigureBase::setPosition(QPointF position, int PosX, int PosY)
+{
+  setPos(position);
+  m_positionX = PosX;
+  m_positionY = PosY;
+  m_firstMove = false;
+}
 void FigureBase::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
   if (m_leftSideTurn != m_leftSide)

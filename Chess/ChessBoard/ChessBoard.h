@@ -38,6 +38,7 @@ private:
   bool m_endOfGame;
   void getEnemyAvailableMoves(bool leftSide);
   void setWinner(bool leftSide);
+  void addPromotionFigure(FigureBase *promotionFigure);
 
 public slots:
     void validMoves(int positionX, int positionY);
