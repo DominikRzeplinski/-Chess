@@ -1,18 +1,12 @@
 #include "FigurePawn.h"
 #include "QtMath"
 
-FigurePawn::FigurePawn(bool side,FigureType type,int x, int y,QGraphicsItem *parent):FigureBase(side,type,x,y,parent)
+FigurePawn::FigurePawn(bool side,FigureType type,int x, int y):FigureBase(side,type,x,y)
 {
   if(side)
-  {
-    setPixmap(QPixmap(":/File_Chess_pdt45.svg"));
     m_image.load(":/File_Chess_pdt45.svg");
-  }
   else
-  {
-    setPixmap(QPixmap(":/File_Chess_plt45.svg"));
     m_image.load(":/File_Chess_plt45.svg");
-  }
   m_stopOnOtherFigure = true;
 }
 

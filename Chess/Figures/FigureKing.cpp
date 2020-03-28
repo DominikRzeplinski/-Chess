@@ -1,18 +1,12 @@
 #include "FigureKing.h"
 #include "QtMath"
 
-FigureKing::FigureKing(bool side,FigureType type,int x, int y,QGraphicsItem *parent):FigureBase(side,type,x,y,parent)
+FigureKing::FigureKing(bool side,FigureType type,int x, int y):FigureBase(side,type,x,y)
 {
   if (side)
-  {
-    setPixmap(QPixmap(":/Chess_kdt45.svg"));
     m_image.load(":/Chess_kdt45.svg");
-  }
   else
-  {
-    setPixmap(QPixmap(":/Chess_klt45.svg"));
     m_image.load(":/Chess_klt45.svg");
-  }
   m_stopOnOtherFigure = true;
 }
 

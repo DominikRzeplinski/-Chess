@@ -1,18 +1,12 @@
 #include "FigureBishop.h"
 #include "QtMath"
 
-FigureBishop::FigureBishop(bool side,FigureType type,int x, int y,QGraphicsItem *parent):FigureBase(side,type,x,y,parent)
+FigureBishop::FigureBishop(bool side,FigureType type,int x, int y):FigureBase(side,type,x,y)
 {
   if (side)
-  {
-    setPixmap(QPixmap(":/File_Chess_bdt45.svg"));
     m_image.load(":/File_Chess_bdt45.svg");
-  }
   else
-  {
-    setPixmap(QPixmap(":/File_Chess_blt45.svg"));
     m_image.load(":/File_Chess_blt45.svg");
-  }
   m_stopOnOtherFigure = true;
 }
 

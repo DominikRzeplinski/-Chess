@@ -1,17 +1,12 @@
 #include "FigureRook.h"
 #include "QtMath"
-FigureRook::FigureRook(bool side,FigureType type,int x, int y,QGraphicsItem *parent):FigureBase(side,type,x,y,parent)
+FigureRook::FigureRook(bool side,FigureType type,int x, int y):FigureBase(side,type,x,y)
 {
   if (side)
-  {
-    setPixmap(QPixmap(":/File_Chess_rdt45.svg"));
     m_image.load(":/Chess_qdt45.svg");
-  }
   else
-  {
-    setPixmap(QPixmap(":/File_Chess_rlt45.svg"));
     m_image.load(":/Chess_qdt45.svg");
-  }
+
   m_stopOnOtherFigure = true;
 }
 

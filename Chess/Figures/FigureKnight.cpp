@@ -1,18 +1,12 @@
 #include "FigureKnight.h"
 #include "QtMath"
 
-FigureKnight::FigureKnight(bool side,FigureType type,int x, int y,QGraphicsItem *parent):FigureBase(side,type,x,y,parent)
+FigureKnight::FigureKnight(bool side,FigureType type,int x, int y):FigureBase(side,type,x,y)
 {
   if(side)
-  {
-    setPixmap(QPixmap(":/File_Chess_ndt45.svg"));
     m_image.load(":/File_Chess_ndt45.svg");
-  }
   else
-  {
-    setPixmap(QPixmap(":/File_Chess_nlt45.svg"));
     m_image.load(":/File_Chess_nlt45.svg");
-  }
   m_stopOnOtherFigure = false;
 }
 
