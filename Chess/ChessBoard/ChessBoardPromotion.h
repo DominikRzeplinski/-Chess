@@ -3,9 +3,16 @@
 
 #include "QGraphicsRectItem"
 
+/*!
+ * \brief The ChessBoardPromotion class represent box to store promotion figures
+ */
 class ChessBoardPromotion: public QGraphicsRectItem
 {
 public:
+  /*!
+   * \brief ChessBoardPromotion contructor
+   * \param parent QGraphicsItem
+   */
   ChessBoardPromotion(QGraphicsItem *parent=0);
 };
 
