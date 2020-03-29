@@ -91,10 +91,11 @@ void ChessBoard::Reset()
     }
 }
 
-void ChessBoard::setNewPosition(int positionX, int positionY, int newPositionX, int newPositionY)
+bool ChessBoard::setNewPosition(int positionX, int positionY, int newPositionX, int newPositionY)
 {
+  bool valid = false;
   if (m_endOfGame)
-    return;
+    return valid;
   m_checkmate = false;
   FigureBase* figure = getFigureAtPosition(positionX, positionY);
       if (figure != NULL)
@@ -186,6 +187,7 @@ void ChessBoard::setNewPosition(int positionX, int positionY, int newPositionX, 
                     }
                   if (validMove || validStrike)
                     {
+                      valid = true;
                       //remove el Passa
                            if (removeElpassa)
                              {
@@ -211,6 +213,7 @@ void ChessBoard::setNewPosition(int positionX, int positionY, int newPositionX, 
 
 
                 }
+      return valid;
         }
 
 void ChessBoard::setAllValidMoves(int positionX, int positionY, bool enemy)
@@ -362,10 +365,11 @@ void ChessBoard::setAllValidMoves(int positionX, int positionY, bool enemy)
     }
 }
 
-void ChessBoard::promotionSelected(int positionX, int positionY)
+bool ChessBoard::promotionSelected(int positionX, int positionY)
 {
+  bool ret = false;
   if (!m_promotionActive)
-    return;
+    return false;
 
       for (int i =0; i< m_promotionFigures.count();i++)
         {
@@ -396,13 +400,14 @@ void ChessBoard::promotionSelected(int positionX, int positionY)
                       m_promotionActive = false;
 
                       pawn->m_leftSideTurn = !pawn->m_leftSideTurn;
+                      ret = true;
                       break;
                     }
                 }
               break;
             }
         }
-
+    return ret;
 }
 
 void ChessBoard::validMoves(int positionX, int positionY)

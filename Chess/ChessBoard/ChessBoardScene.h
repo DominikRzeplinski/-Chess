@@ -7,12 +7,15 @@
 #include "ChessBoardPlayerText.h"
 #include "ChessBoardPromotion.h"
 #include "ChessBoard.h"
+#include "ChessBoardHistory.h"
 
 class ChessBoardScene:public QGraphicsScene
 {
 public:
   ChessBoardScene(QObject *parent = 0);
   void Reset();
+  void SaveGame(QString fileName);
+  void LoadGame(QString fileName);
   QList<ChessBoardBox*> boxes;
   ChessBoardSidePanel* panelLeft;
   ChessBoardSidePanel* panelRight;
@@ -26,7 +29,9 @@ public:
   void setColorForBoxes();
   void CleanScene();
   ChessBoard* chessBoard;
+  ChessBoardHistory* history;
   void Refresh();
+  void RefreshAfterPromotion();
 public slots:
     void promotionSelected(int positionX, int positionY);
     void validMoves(int positionX, int positionY);

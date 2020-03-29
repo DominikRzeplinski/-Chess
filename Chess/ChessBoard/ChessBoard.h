@@ -26,10 +26,10 @@ public:
   bool m_checkmate;
   void getEnemyAvailableMoves(bool leftSide);
   void setWinner(bool leftSide);
-  void promotionSelected(int positionX, int positionY);
+  bool promotionSelected(int positionX, int positionY);
     void validMoves(int positionX, int positionY);
     void clearMoves();
-    void setNewPosition(int positionX, int positionY,int newPositionX, int newPositionY);
+    bool setNewPosition(int positionX, int positionY,int newPositionX, int newPositionY);
     bool isElpassaPostion(int xPos, int yPos);
     bool checkCheckMat(int positionX, int positionY);
 };

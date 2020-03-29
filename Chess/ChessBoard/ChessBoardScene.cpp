@@ -1,5 +1,6 @@
 #include "ChessBoardScene.h"
 #include "QCursor"
+#include "ChessBoardMove.h"
 
 ChessBoardScene::ChessBoardScene(QObject *parent): QGraphicsScene(parent)
 {
@@ -11,6 +12,7 @@ ChessBoardScene::ChessBoardScene(QObject *parent): QGraphicsScene(parent)
   playerTextLeft = NULL;
   playerTextRight = NULL;
   promotion = NULL;
+  history = NULL;
   Reset();
 
 }
@@ -35,7 +37,33 @@ void ChessBoardScene::CleanScene()
   promotion = NULL;
   playerTextLeft = NULL;
   playerTextRight = NULL;
+  if (history)
+    delete history;
+  history = NULL;
   clear();
+}
+
+void ChessBoardScene::LoadGame(QString fileName)
+{
+  Reset();
+  history->LoadGame(fileName);
+  for (int i=0;i< history->getChessBoardHistory()->count();++i)
+    {
+      chessBoard->validMoves(history->getChessBoardHistory()->at(i).positionX,history->getChessBoardHistory()->at(i).positionY);
+      chessBoard->setNewPosition(history->getChessBoardHistory()->at(i).positionX,history->getChessBoardHistory()->at(i).positionY,history->getChessBoardHistory()->at(i).newPositionX,history->getChessBoardHistory()->at(i).newPositionY);
+      if (history->getChessBoardHistory()->at(i).promotion)
+          chessBoard->promotionSelected(history->getChessBoardHistory()->at(i).positionX,history->getChessBoardHistory()->at(i).positionY);
+
+
+    }
+  RefreshAfterPromotion();
+  Refresh();
+
+}
+
+void ChessBoardScene::SaveGame(QString fileName)
+{
+  history->SaveGame(fileName);
 }
 
 void ChessBoardScene::Reset()
@@ -101,6 +129,7 @@ void ChessBoardScene::Reset()
   addItem(playerTextLeft);
   playerTextRight = new ChessBoardPlayerText(false);
   addItem(playerTextRight);
+  history = new ChessBoardHistory();
 }
 
 ChessBoardBox* ChessBoardScene::getBoxAtPosition(int positionX, int positionY)
@@ -130,7 +159,10 @@ void ChessBoardScene::setNewPosition(int positionX, int positionY)
 
   //set new position of selected figure
   if (box)
-    chessBoard->setNewPosition(positionX,positionY,box->PositionX,box->PositionY);
+    {
+      if (chessBoard->setNewPosition(positionX,positionY,box->PositionX,box->PositionY))
+        history->addMove(ChessBoardMove(positionX,positionY,box->PositionX,box->PositionY));
+    }
 
   //refresh scene
   Refresh();
@@ -177,7 +209,10 @@ void ChessBoardScene::Refresh()
   for (int i=0; i< figureViews.count(); i++)
     {
       if (figureViews.at(i)->figureBase->m_type == FigureType::Alive)
+        {
         figureViews.at(i)->setPos(getBoxAtPosition(figureViews.at(i)->figureBase->m_positionX,figureViews.at(i)->figureBase->m_positionY)->pos());
+        figureViews.at(i)->show();
+        }
       else if (figureViews.at(i)->figureBase->m_type == FigureType::Killed)
         {
           figureViews.at(i)->setAcceptedMouseButtons(Qt::NoButton);
@@ -192,6 +227,7 @@ void ChessBoardScene::Refresh()
               figureViews.at(i)->setPos(panelRight->GetFreeSlotPos());
               panelRight->SetSlotPos();
             }
+          figureViews.at(i)->show();
         }
       else
         figureViews.at(i)->hide();
@@ -213,10 +249,8 @@ void ChessBoardScene::Refresh()
     }
 }
 
-void ChessBoardScene::promotionSelected(int positionX, int positionY)
+void ChessBoardScene::RefreshAfterPromotion()
 {
-  chessBoard->promotionSelected(positionX,positionY);
-
   for (int i =0; i< promotionFigureViews.count(); ++i)
     {
       if (promotionFigureViews.at(i)->figureBase->m_type == FigureType::Alive)
@@ -227,6 +261,15 @@ void ChessBoardScene::promotionSelected(int positionX, int positionY)
           promotionFigureViews.removeAt(i);
         }
     }
+}
+
+void ChessBoardScene::promotionSelected(int positionX, int positionY)
+{
+  if (!chessBoard->promotionSelected(positionX,positionY))
+      return;
+  RefreshAfterPromotion();
+  history->addMove(ChessBoardMove(positionX,positionY,0,0,true));
+
   Refresh();
 }
 
