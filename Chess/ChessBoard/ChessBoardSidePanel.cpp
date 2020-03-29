@@ -10,15 +10,27 @@ ChessBoardSidePanel::ChessBoardSidePanel(bool left, QGraphicsItem *parent):QGrap
     setPos(600,0);
   leftSifde = left;
   setBrush(Qt::white);
-  freeSlot = 0;
+  setZValue(-1);
+  ResetSlot();
+}
+
+void ChessBoardSidePanel::ResetSlot()
+{
+  freeSlotY =0;
+  freeSlotX =0;
 }
 
 void ChessBoardSidePanel::SetSlotPos()
 {
-  freeSlot ++;
+  freeSlotY ++;
+  if (freeSlotY > 3)
+    {
+      freeSlotX ++;
+    freeSlotY =0;
+    }
 }
 QPointF ChessBoardSidePanel::GetFreeSlotPos()
 {
-  return QPointF(leftSifde ? 0:600,freeSlot * 50);
+  return QPointF((leftSifde ? 0:600) +freeSlotY * 50,freeSlotX * 50);
 }
 

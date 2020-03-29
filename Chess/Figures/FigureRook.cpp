@@ -3,9 +3,9 @@
 FigureRook::FigureRook(bool side,FigureType type,int x, int y):FigureBase(side,type,x,y)
 {
   if (side)
-    m_image.load(":/Chess_qdt45.svg");
+    m_image.load(":/File_Chess_rdt45.svg");
   else
-    m_image.load(":/Chess_qdt45.svg");
+    m_image.load(":/File_Chess_rlt45.svg");
 
   m_stopOnOtherFigure = true;
 }

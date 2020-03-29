@@ -24,6 +24,7 @@ void FigureView::mousePressEvent(QGraphicsSceneMouseEvent *event)
     setZValue(1);
     setCursor(Qt::ClosedHandCursor);
     emit figureSelected(figureBase->m_positionX,figureBase->m_positionY);
+    emit figurePromotionSelected(figureBase->m_positionX,figureBase->m_positionY);
 }
 
 void FigureView::mouseReleaseEvent(QGraphicsSceneMouseEvent *)

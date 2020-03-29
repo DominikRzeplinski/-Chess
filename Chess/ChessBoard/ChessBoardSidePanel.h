@@ -9,8 +9,10 @@ public:
   ChessBoardSidePanel(bool left = true, QGraphicsItem *parent=0);
   QPointF GetFreeSlotPos();
   void SetSlotPos();
+  void ResetSlot();
 private:
-  int freeSlot;
+  int freeSlotX;
+  int freeSlotY;
   bool leftSifde;
 };
 

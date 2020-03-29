@@ -48,9 +48,3 @@ bool FigurePawn::moveEnemyDirection(int PositionX)
   return true;
 }
 
-void FigurePawn::Promote()
-{
-  QGraphicsRectItem *promoteScene = new QGraphicsRectItem(0,0,800,600);
-  promoteScene->setOpacity(0.2);
-
-}

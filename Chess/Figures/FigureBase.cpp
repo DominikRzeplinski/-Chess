@@ -9,7 +9,6 @@ FigureBase::FigureBase(bool side,FigureType type, int x, int y)
   m_positionY =y;
   m_type = type;
   m_firstMove = true;
-  m_leftSideTurn = true;
 }
 
 void FigureBase::setPosition(int PosX, int PosY)

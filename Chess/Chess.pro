@@ -29,6 +29,7 @@ SOURCES += \
     Figures/FigurePawn.cpp \
     Figures/FigureQueen.cpp \
     Figures/FigureRook.cpp \
+    Figures/FigureView.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -46,6 +47,7 @@ HEADERS += \
     Figures/FigurePawn.h \
     Figures/FigureQueen.h \
     Figures/FigureRook.h \
+    Figures/FigureView.h \
     mainwindow.h
 
 FORMS += \

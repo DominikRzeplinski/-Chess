@@ -8,7 +8,6 @@ class ChessBoardBox: public QGraphicsRectItem
 public:
   int PositionX;
   int PositionY;
-  bool m_bHasFigure;
   ChessBoardBox(int xPos, int yPos, QGraphicsItem *parent=0);
   void ResetBrush();
 private:

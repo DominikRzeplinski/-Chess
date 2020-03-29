@@ -16,7 +16,6 @@ MainWindow::MainWindow(QWidget *parent)
   gameView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   gameView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   m_sceneChessBoard = new ChessBoardScene();
-  m_chessBoard = new ChessBoard();
   Reset();
   gameView->setScene(m_sceneChessBoard);
 
@@ -56,23 +55,5 @@ void MainWindow::on_actionLoad_game_triggered()
 
 void MainWindow::Reset()
 {
-  m_chessBoard->Reset();
-  m_sceneChessBoard->clear();
-  m_sceneChessBoard->addItem(m_chessBoard->m_panelLeft);
-  m_sceneChessBoard->addItem(m_chessBoard->m_panelRight);
-  for (int i =0; i < m_chessBoard->m_boxes.count(); ++i)
-  {
-    m_sceneChessBoard->addItem(m_chessBoard->m_boxes.at(i));
-  }
-  for (int i =0; i < m_chessBoard->m_figures.count(); ++i)
-  {
-    m_sceneChessBoard->addItem(m_chessBoard->m_figures.at(i));
-  }
-  m_sceneChessBoard->addItem(m_chessBoard->m_promotion);
-  for(int i=0; i< m_chessBoard->m_promotionFigures.count();++i)
-    {
-      m_sceneChessBoard->addItem(m_chessBoard->m_promotionFigures.at(i));
-    }
-  m_sceneChessBoard->addItem(m_chessBoard->m_playerTextLeft);
-  m_sceneChessBoard->addItem(m_chessBoard->m_playerTextRight);
+  m_sceneChessBoard->Reset();
 }

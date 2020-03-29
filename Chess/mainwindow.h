@@ -27,7 +27,6 @@ private slots:
   void Reset();
 private:
   Ui::MainWindow *ui;
-  ChessBoard * m_chessBoard;
   ChessBoardScene *m_sceneChessBoard;
 };
 #endif // MAINWINDOW_H
