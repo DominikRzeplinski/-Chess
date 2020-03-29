@@ -23,7 +23,7 @@ bool FigureBase::canSelect()
 
   if (m_leftSideTurn != m_leftSide)
     {
-    return false;
+      return false;
     }
   if (m_type == FigureType::Killed)
     return false;

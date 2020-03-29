@@ -21,10 +21,10 @@ protected:
   QColor color;
   QPointF m_translatePoint;
 signals:
-    void figurePromotionSelected(int PositionX, int PositionY);
-    void figureSelected(int PositionX, int PositionY);
-    void figureDeselected();
-    void figureMoved(int PositionX, int PositionY);
+  void figurePromotionSelected(int PositionX, int PositionY);
+  void figureSelected(int PositionX, int PositionY);
+  void figureDeselected();
+  void figureMoved(int PositionX, int PositionY);
 };
 
 #endif // FIGUREVIEW_H

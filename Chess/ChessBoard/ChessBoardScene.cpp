@@ -52,7 +52,7 @@ void ChessBoardScene::LoadGame(QString fileName)
       chessBoard->validMoves(history->getChessBoardHistory()->at(i).positionX,history->getChessBoardHistory()->at(i).positionY);
       chessBoard->setNewPosition(history->getChessBoardHistory()->at(i).positionX,history->getChessBoardHistory()->at(i).positionY,history->getChessBoardHistory()->at(i).newPositionX,history->getChessBoardHistory()->at(i).newPositionY);
       if (history->getChessBoardHistory()->at(i).promotion)
-          chessBoard->promotionSelected(history->getChessBoardHistory()->at(i).positionX,history->getChessBoardHistory()->at(i).positionY);
+        chessBoard->promotionSelected(history->getChessBoardHistory()->at(i).positionX,history->getChessBoardHistory()->at(i).positionY);
 
 
     }
@@ -75,12 +75,12 @@ void ChessBoardScene::Reset()
   //Creste boxes for board
   for(int y = 0; y < 8; y++) {
       for(int x = 0; x < 8; x++)
-      {
+        {
           box = new ChessBoardBox(x,y);
           boxes.append(box);
           addItem(box);
-      }
-  }
+        }
+    }
 
   FigureView * figureView;
   //Create Views for figures
@@ -91,11 +91,11 @@ void ChessBoardScene::Reset()
       figureViews.append(figureView);
       addItem(figureView);
       QObject::connect(figureView, &FigureView::figureSelected,
-                           this, &ChessBoardScene::validMoves);
+                       this, &ChessBoardScene::validMoves);
       QObject::connect(figureView, &FigureView::figureDeselected,
-                           this, &ChessBoardScene::clearMoves);
+                       this, &ChessBoardScene::clearMoves);
       QObject::connect(figureView, &FigureView::figureMoved,
-                           this, &ChessBoardScene::setNewPosition);
+                       this, &ChessBoardScene::setNewPosition);
     }
 
   //Create side panles
@@ -115,13 +115,13 @@ void ChessBoardScene::Reset()
       promotionFigureViews.append(figureView);
       addItem(figureView);
       QObject::connect(figureView, &FigureView::figurePromotionSelected,
-                           this, &ChessBoardScene::promotionSelected);
+                       this, &ChessBoardScene::promotionSelected);
       QObject::connect(figureView, &FigureView::figureSelected,
-                           this, &ChessBoardScene::validMoves);
+                       this, &ChessBoardScene::validMoves);
       QObject::connect(figureView, &FigureView::figureDeselected,
-                           this, &ChessBoardScene::clearMoves);
+                       this, &ChessBoardScene::clearMoves);
       QObject::connect(figureView, &FigureView::figureMoved,
-                           this, &ChessBoardScene::setNewPosition);
+                       this, &ChessBoardScene::setNewPosition);
     }
 
   //Create text displays for players
@@ -136,8 +136,8 @@ ChessBoardBox* ChessBoardScene::getBoxAtPosition(int positionX, int positionY)
 {
   for (int j=0; j< boxes.count(); ++j)
     {
-        if (boxes.at(j)->PositionX == positionX && boxes.at(j)->PositionY == positionY)
-          return boxes.at(j);
+      if (boxes.at(j)->PositionX == positionX && boxes.at(j)->PositionY == positionY)
+        return boxes.at(j);
     }
   return NULL;
 }
@@ -146,8 +146,8 @@ ChessBoardBox* ChessBoardScene::getBoxUnderMouse()
 {
   for (int j=0; j< boxes.count(); ++j)
     {
-        if (boxes.at(j)->isUnderMouse())
-          return boxes.at(j);
+      if (boxes.at(j)->isUnderMouse())
+        return boxes.at(j);
     }
   return NULL;
 }
@@ -178,10 +178,10 @@ void ChessBoardScene::Refresh()
           playerTextLeft->setPlainText("Winner");
           playerTextLeft->adjustSize();
         }
-        else {
-            playerTextRight->setPlainText("Winner");
-            playerTextLeft->adjustSize();
-          }
+      else {
+          playerTextRight->setPlainText("Winner");
+          playerTextLeft->adjustSize();
+        }
       return;
     }
   else if (chessBoard->m_checkmate)
@@ -200,8 +200,8 @@ void ChessBoardScene::Refresh()
         }
     }
   else {
-        playerTextLeft->setPlainText("");
-        playerTextRight->setPlainText("");
+      playerTextLeft->setPlainText("");
+      playerTextRight->setPlainText("");
 
     }
   panelLeft->ResetSlot();
@@ -210,8 +210,8 @@ void ChessBoardScene::Refresh()
     {
       if (figureViews.at(i)->figureBase->m_type == FigureType::Alive)
         {
-        figureViews.at(i)->setPos(getBoxAtPosition(figureViews.at(i)->figureBase->m_positionX,figureViews.at(i)->figureBase->m_positionY)->pos());
-        figureViews.at(i)->show();
+          figureViews.at(i)->setPos(getBoxAtPosition(figureViews.at(i)->figureBase->m_positionX,figureViews.at(i)->figureBase->m_positionY)->pos());
+          figureViews.at(i)->show();
         }
       else if (figureViews.at(i)->figureBase->m_type == FigureType::Killed)
         {
@@ -219,8 +219,8 @@ void ChessBoardScene::Refresh()
           figureViews.at(i)->setCursor(Qt::ArrowCursor);
           if (figureViews.at(i)->figureBase->m_leftSide)
             {
-          figureViews.at(i)->setPos(panelLeft->GetFreeSlotPos());
-          panelLeft->SetSlotPos();
+              figureViews.at(i)->setPos(panelLeft->GetFreeSlotPos());
+              panelLeft->SetSlotPos();
             }
           else
             {
@@ -245,7 +245,7 @@ void ChessBoardScene::Refresh()
     {
       promotion->hide();
       for (int i=0;i<promotionFigureViews.count(); i++)
-            promotionFigureViews.at(i)->hide();
+        promotionFigureViews.at(i)->hide();
     }
 }
 
@@ -257,7 +257,7 @@ void ChessBoardScene::RefreshAfterPromotion()
         {
           figureViews.append(promotionFigureViews.at(i));
           QObject::disconnect(promotionFigureViews.at(i), &FigureView::figurePromotionSelected,
-                               this, &ChessBoardScene::promotionSelected);
+                              this, &ChessBoardScene::promotionSelected);
           promotionFigureViews.removeAt(i);
         }
     }
@@ -266,7 +266,7 @@ void ChessBoardScene::RefreshAfterPromotion()
 void ChessBoardScene::promotionSelected(int positionX, int positionY)
 {
   if (!chessBoard->promotionSelected(positionX,positionY))
-      return;
+    return;
   RefreshAfterPromotion();
   history->addMove(ChessBoardMove(positionX,positionY,0,0,true));
 
@@ -293,7 +293,7 @@ void ChessBoardScene::setColorForBoxes()
 void ChessBoardScene::clearMoves()
 {
   for (int j=0;j<boxes.count();++j)
-  {
-     boxes.at(j)->ResetBrush();
-  }
+    {
+      boxes.at(j)->ResetBrush();
+    }
 }

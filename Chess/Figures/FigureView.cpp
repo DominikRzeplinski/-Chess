@@ -20,23 +20,23 @@ void FigureView::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
   if (!figureBase->canSelect())
     return;
-    m_translatePoint = mapToScene(event->pos()) - pos();
-    setZValue(1);
-    setCursor(Qt::ClosedHandCursor);
-    emit figureSelected(figureBase->m_positionX,figureBase->m_positionY);
-    emit figurePromotionSelected(figureBase->m_positionX,figureBase->m_positionY);
+  m_translatePoint = mapToScene(event->pos()) - pos();
+  setZValue(1);
+  setCursor(Qt::ClosedHandCursor);
+  emit figureSelected(figureBase->m_positionX,figureBase->m_positionY);
+  emit figurePromotionSelected(figureBase->m_positionX,figureBase->m_positionY);
 }
 
 void FigureView::mouseReleaseEvent(QGraphicsSceneMouseEvent *)
 {
   if (!figureBase->canSelect())
     return;
-    setZValue(0);
-    setCursor(Qt::OpenHandCursor);
-    emit figureDeselected();
-    if (!figureBase->canMove())
-      return;
-    emit figureMoved(figureBase->m_positionX,figureBase->m_positionY);
+  setZValue(0);
+  setCursor(Qt::OpenHandCursor);
+  emit figureDeselected();
+  if (!figureBase->canMove())
+    return;
+  emit figureMoved(figureBase->m_positionX,figureBase->m_positionY);
 }
 
 void FigureView::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -45,5 +45,5 @@ void FigureView::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     return;
   if (!figureBase->canMove())
     return;
-    setPos(mapToScene(event->pos()) - m_translatePoint);
+  setPos(mapToScene(event->pos()) - m_translatePoint);
 }

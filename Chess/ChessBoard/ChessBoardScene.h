@@ -33,10 +33,10 @@ public:
   void Refresh();
   void RefreshAfterPromotion();
 public slots:
-    void promotionSelected(int positionX, int positionY);
-    void validMoves(int positionX, int positionY);
-    void clearMoves();
-    void setNewPosition(int positionX, int positionY);
+  void promotionSelected(int positionX, int positionY);
+  void validMoves(int positionX, int positionY);
+  void clearMoves();
+  void setNewPosition(int positionX, int positionY);
 };
 
 #endif // CHESSBOARDSCENE_H

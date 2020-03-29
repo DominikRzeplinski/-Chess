@@ -26,7 +26,7 @@ void ChessBoardSidePanel::SetSlotPos()
   if (freeSlotY > 3)
     {
       freeSlotX ++;
-    freeSlotY =0;
+      freeSlotY =0;
     }
 }
 QPointF ChessBoardSidePanel::GetFreeSlotPos()

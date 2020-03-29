@@ -17,7 +17,7 @@ void ChessBoardHistory::LoadGame(QString fileName)
 {
   QFile file(fileName);
   if (!file.open(QIODevice::ReadOnly))
-     return;
+    return;
   chessBoardMoves.clear();
   QDataStream in(&file);
   in.setVersion(QDataStream::Qt_4_5);
@@ -38,15 +38,15 @@ void ChessBoardHistory::SaveGame(QString fileName)
 {
   QFile file(fileName);
   if (!file.open(QIODevice::WriteOnly))
-     return;
+    return;
   QDataStream out(&file);
   out.setVersion(QDataStream::Qt_4_5);
   for (int i=0 ; i < chessBoardMoves.count(); ++i)
     {
-       out << chessBoardMoves.at(i).promotion;
-       out << chessBoardMoves.at(i).positionX;
-       out << chessBoardMoves.at(i).positionY;
-       out << chessBoardMoves.at(i).newPositionX;
-       out << chessBoardMoves.at(i).newPositionY;
+      out << chessBoardMoves.at(i).promotion;
+      out << chessBoardMoves.at(i).positionX;
+      out << chessBoardMoves.at(i).positionY;
+      out << chessBoardMoves.at(i).newPositionX;
+      out << chessBoardMoves.at(i).newPositionY;
     }
 }

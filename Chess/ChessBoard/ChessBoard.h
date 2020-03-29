@@ -27,11 +27,11 @@ public:
   void getEnemyAvailableMoves(bool leftSide);
   void setWinner(bool leftSide);
   bool promotionSelected(int positionX, int positionY);
-    void validMoves(int positionX, int positionY);
-    void clearMoves();
-    bool setNewPosition(int positionX, int positionY,int newPositionX, int newPositionY);
-    bool isElpassaPostion(int xPos, int yPos);
-    bool checkCheckMat(int positionX, int positionY);
+  void validMoves(int positionX, int positionY);
+  void clearMoves();
+  bool setNewPosition(int positionX, int positionY,int newPositionX, int newPositionY);
+  bool isElpassaPostion(int xPos, int yPos);
+  bool checkCheckMat(int positionX, int positionY);
 };
 
 #endif // CHESSBOARD_H

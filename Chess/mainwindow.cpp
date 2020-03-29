@@ -47,19 +47,19 @@ void MainWindow::on_actionNew_game_triggered()
 void MainWindow::on_actionSave_game_triggered()
 {
   QString fileName = QFileDialog::getSaveFileName(this,
-                                                 tr("Save Chess Game"), "",
-                                                 tr("Chess game (*.chess);;All Files (*)"));
+                                                  tr("Save Chess Game"), "",
+                                                  tr("Chess game (*.chess);;All Files (*)"));
   if (!fileName.isEmpty())
-  m_sceneChessBoard->SaveGame(fileName);
+    m_sceneChessBoard->SaveGame(fileName);
 }
 
 void MainWindow::on_actionLoad_game_triggered()
 {
   QString fileName = QFileDialog::getOpenFileName(this,
-          tr("Load Chess Game"), "",
-          tr("Chess game (*.chess);;All Files (*)"));
+                                                  tr("Load Chess Game"), "",
+                                                  tr("Chess game (*.chess);;All Files (*)"));
   if (!fileName.isEmpty())
-  m_sceneChessBoard->LoadGame(fileName);
+    m_sceneChessBoard->LoadGame(fileName);
 }
 
 void MainWindow::Reset()

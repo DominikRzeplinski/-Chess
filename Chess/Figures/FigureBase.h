@@ -5,7 +5,7 @@
 enum class FigureType { Alive,
                         Killed,
                         Promotion
-};
+                      };
 
 class FigureBase
 {
