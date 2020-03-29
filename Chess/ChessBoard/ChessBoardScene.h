@@ -14,8 +14,9 @@ class ChessBoardScene:public QGraphicsScene
 public:
   ChessBoardScene(QObject *parent = 0);
   void Reset();
-  void SaveGame(QString fileName);
-  void LoadGame(QString fileName);
+  void saveGame(QString fileName);
+  void loadGame(QString fileName);
+private:
   QList<ChessBoardBox*> boxes;
   ChessBoardSidePanel* panelLeft;
   ChessBoardSidePanel* panelRight;
@@ -27,11 +28,11 @@ public:
   ChessBoardBox* getBoxAtPosition(int positionX, int positionY);
   ChessBoardBox* getBoxUnderMouse();
   void setColorForBoxes();
-  void CleanScene();
+  void cleanScene();
   ChessBoard* chessBoard;
   ChessBoardHistory* history;
-  void Refresh();
-  void RefreshAfterPromotion();
+  void refresh();
+  void refreshAfterPromotion();
 public slots:
   void promotionSelected(int positionX, int positionY);
   void validMoves(int positionX, int positionY);

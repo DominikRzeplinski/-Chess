@@ -17,7 +17,7 @@ ChessBoardScene::ChessBoardScene(QObject *parent): QGraphicsScene(parent)
 
 }
 
-void ChessBoardScene::CleanScene()
+void ChessBoardScene::cleanScene()
 {
   boxes.clear();
   figureViews.clear();
@@ -43,10 +43,10 @@ void ChessBoardScene::CleanScene()
   clear();
 }
 
-void ChessBoardScene::LoadGame(QString fileName)
+void ChessBoardScene::loadGame(QString fileName)
 {
   Reset();
-  history->LoadGame(fileName);
+  history->loadGame(fileName);
   for (int i=0;i< history->getChessBoardHistory()->count();++i)
     {
       chessBoard->validMoves(history->getChessBoardHistory()->at(i).positionX,history->getChessBoardHistory()->at(i).positionY);
@@ -56,19 +56,19 @@ void ChessBoardScene::LoadGame(QString fileName)
 
 
     }
-  RefreshAfterPromotion();
-  Refresh();
+  refreshAfterPromotion();
+  refresh();
 
 }
 
-void ChessBoardScene::SaveGame(QString fileName)
+void ChessBoardScene::saveGame(QString fileName)
 {
-  history->SaveGame(fileName);
+  history->saveGame(fileName);
 }
 
 void ChessBoardScene::Reset()
 {
-  CleanScene();
+  cleanScene();
   chessBoard->Reset();
 
   ChessBoardBox *box;
@@ -84,10 +84,10 @@ void ChessBoardScene::Reset()
 
   FigureView * figureView;
   //Create Views for figures
-  for(int i=0; i< chessBoard->m_figures.count();++i)
+  for(int i=0; i< chessBoard->figures.count();++i)
     {
-      figureView = new FigureView(chessBoard->m_figures.at(i));
-      figureView->setPos(getBoxAtPosition(chessBoard->m_figures.at(i)->m_positionX,chessBoard->m_figures.at(i)->m_positionY)->pos());
+      figureView = new FigureView(chessBoard->figures.at(i));
+      figureView->setPos(getBoxAtPosition(chessBoard->figures.at(i)->positionX,chessBoard->figures.at(i)->positionY)->pos());
       figureViews.append(figureView);
       addItem(figureView);
       QObject::connect(figureView, &FigureView::figureSelected,
@@ -107,10 +107,10 @@ void ChessBoardScene::Reset()
   addItem(promotion);
 
   //Create Views for promotion figures
-  for (int i =0 ; i < chessBoard->m_promotionFigures.count(); ++i)
+  for (int i =0 ; i < chessBoard->promotionFigures.count(); ++i)
     {
-      figureView = new FigureView(chessBoard->m_promotionFigures.at(i));
-      figureView->setPos(250 - chessBoard->m_promotionFigures.at(i)->m_positionY * 50,200 - chessBoard->m_promotionFigures.at(i)->m_positionX * 50 );
+      figureView = new FigureView(chessBoard->promotionFigures.at(i));
+      figureView->setPos(250 - chessBoard->promotionFigures.at(i)->positionY * 50,200 - chessBoard->promotionFigures.at(i)->positionX * 50 );
       figureView->hide();
       promotionFigureViews.append(figureView);
       addItem(figureView);
@@ -136,7 +136,7 @@ ChessBoardBox* ChessBoardScene::getBoxAtPosition(int positionX, int positionY)
 {
   for (int j=0; j< boxes.count(); ++j)
     {
-      if (boxes.at(j)->PositionX == positionX && boxes.at(j)->PositionY == positionY)
+      if (boxes.at(j)->positionX == positionX && boxes.at(j)->positionY == positionY)
         return boxes.at(j);
     }
   return NULL;
@@ -160,18 +160,18 @@ void ChessBoardScene::setNewPosition(int positionX, int positionY)
   //set new position of selected figure
   if (box)
     {
-      if (chessBoard->setNewPosition(positionX,positionY,box->PositionX,box->PositionY))
-        history->addMove(ChessBoardMove(positionX,positionY,box->PositionX,box->PositionY));
+      if (chessBoard->setNewPosition(positionX,positionY,box->positionX,box->positionY))
+        history->addMove(ChessBoardMove(positionX,positionY,box->positionX,box->positionY));
     }
 
   //refresh scene
-  Refresh();
+  refresh();
 
 }
 
-void ChessBoardScene::Refresh()
+void ChessBoardScene::refresh()
 {
-  if (chessBoard->m_endOfGame)
+  if (chessBoard->endOfGame)
     {
       if (chessBoard->leftSideWinner)
         {
@@ -184,9 +184,9 @@ void ChessBoardScene::Refresh()
         }
       return;
     }
-  else if (chessBoard->m_checkmate)
+  else if (chessBoard->checkMate)
     {
-      if (figureViews.at(0)->figureBase->m_leftSideTurn)
+      if (figureViews.at(0)->figureBase->leftSideTurn)
         {
           playerTextLeft->setPlainText("Check! Protect yours king");
           playerTextRight->setPlainText("");
@@ -204,35 +204,35 @@ void ChessBoardScene::Refresh()
       playerTextRight->setPlainText("");
 
     }
-  panelLeft->ResetSlot();
-  panelRight->ResetSlot();
+  panelLeft->resetSlot();
+  panelRight->resetSlot();
   for (int i=0; i< figureViews.count(); i++)
     {
-      if (figureViews.at(i)->figureBase->m_type == FigureType::Alive)
+      if (figureViews.at(i)->figureBase->type == FigureType::Alive)
         {
-          figureViews.at(i)->setPos(getBoxAtPosition(figureViews.at(i)->figureBase->m_positionX,figureViews.at(i)->figureBase->m_positionY)->pos());
+          figureViews.at(i)->setPos(getBoxAtPosition(figureViews.at(i)->figureBase->positionX,figureViews.at(i)->figureBase->positionY)->pos());
           figureViews.at(i)->show();
         }
-      else if (figureViews.at(i)->figureBase->m_type == FigureType::Killed)
+      else if (figureViews.at(i)->figureBase->type == FigureType::Killed)
         {
           figureViews.at(i)->setAcceptedMouseButtons(Qt::NoButton);
           figureViews.at(i)->setCursor(Qt::ArrowCursor);
-          if (figureViews.at(i)->figureBase->m_leftSide)
+          if (figureViews.at(i)->figureBase->leftSide)
             {
-              figureViews.at(i)->setPos(panelLeft->GetFreeSlotPos());
-              panelLeft->SetSlotPos();
+              figureViews.at(i)->setPos(panelLeft->getFreeSlotPos());
+              panelLeft->setSlotPos();
             }
           else
             {
-              figureViews.at(i)->setPos(panelRight->GetFreeSlotPos());
-              panelRight->SetSlotPos();
+              figureViews.at(i)->setPos(panelRight->getFreeSlotPos());
+              panelRight->setSlotPos();
             }
           figureViews.at(i)->show();
         }
       else
         figureViews.at(i)->hide();
     }
-  if (chessBoard->m_promotionActive)
+  if (chessBoard->promotionActive)
     {
       promotion->show();
       for (int i=0;i<promotionFigureViews.count(); i++)
@@ -249,11 +249,11 @@ void ChessBoardScene::Refresh()
     }
 }
 
-void ChessBoardScene::RefreshAfterPromotion()
+void ChessBoardScene::refreshAfterPromotion()
 {
   for (int i =0; i< promotionFigureViews.count(); ++i)
     {
-      if (promotionFigureViews.at(i)->figureBase->m_type == FigureType::Alive)
+      if (promotionFigureViews.at(i)->figureBase->type == FigureType::Alive)
         {
           figureViews.append(promotionFigureViews.at(i));
           QObject::disconnect(promotionFigureViews.at(i), &FigureView::figurePromotionSelected,
@@ -267,10 +267,10 @@ void ChessBoardScene::promotionSelected(int positionX, int positionY)
 {
   if (!chessBoard->promotionSelected(positionX,positionY))
     return;
-  RefreshAfterPromotion();
+  refreshAfterPromotion();
   history->addMove(ChessBoardMove(positionX,positionY,0,0,true));
 
-  Refresh();
+  refresh();
 }
 
 void ChessBoardScene::validMoves(int positionX, int positionY)
@@ -282,10 +282,10 @@ void ChessBoardScene::validMoves(int positionX, int positionY)
 
 void ChessBoardScene::setColorForBoxes()
 {
-  for (int i=0; i < chessBoard->m_availableMoves.count(); i++)
-    getBoxAtPosition(chessBoard->m_availableMoves.at(i).first,chessBoard->m_availableMoves.at(i).second)->setBrush(Qt::green);
-  for (int i=0; i< chessBoard->m_availableStrikeMoves.count(); i++)
-    getBoxAtPosition(chessBoard->m_availableStrikeMoves.at(i).first,chessBoard->m_availableStrikeMoves.at(i).second)->setBrush(Qt::red);
+  for (int i=0; i < chessBoard->availableMoves.count(); i++)
+    getBoxAtPosition(chessBoard->availableMoves.at(i).first,chessBoard->availableMoves.at(i).second)->setBrush(Qt::green);
+  for (int i=0; i< chessBoard->availableStrikeMoves.count(); i++)
+    getBoxAtPosition(chessBoard->availableStrikeMoves.at(i).first,chessBoard->availableStrikeMoves.at(i).second)->setBrush(Qt::red);
 
 }
 

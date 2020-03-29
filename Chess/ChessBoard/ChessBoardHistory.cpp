@@ -13,7 +13,7 @@ QList<ChessBoardMove>* ChessBoardHistory::getChessBoardHistory()
   return &chessBoardMoves;
 }
 
-void ChessBoardHistory::LoadGame(QString fileName)
+void ChessBoardHistory::loadGame(QString fileName)
 {
   QFile file(fileName);
   if (!file.open(QIODevice::ReadOnly))
@@ -34,7 +34,7 @@ void ChessBoardHistory::LoadGame(QString fileName)
     }
 }
 
-void ChessBoardHistory::SaveGame(QString fileName)
+void ChessBoardHistory::saveGame(QString fileName)
 {
   QFile file(fileName);
   if (!file.open(QIODevice::WriteOnly))

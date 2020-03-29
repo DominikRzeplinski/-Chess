@@ -7,8 +7,8 @@ class FigureRook: public FigureBase
 {
 public:
   FigureRook(bool side = true,FigureType type = FigureType::Alive, int x =0, int y =0);
-  bool ValidatePosition(int PositionX, int PositionY);
-  bool ValidateStrikePosition(int PositionX, int PositionY);
+  bool validatePosition(int PositionX, int PositionY);
+  bool validateStrikePosition(int PositionX, int PositionY);
 };
 
 #endif // FIGUREROOK_H

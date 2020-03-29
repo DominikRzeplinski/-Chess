@@ -11,16 +11,16 @@ ChessBoardSidePanel::ChessBoardSidePanel(bool left, QGraphicsItem *parent):QGrap
   leftSifde = left;
   setBrush(Qt::white);
   setZValue(-1);
-  ResetSlot();
+  resetSlot();
 }
 
-void ChessBoardSidePanel::ResetSlot()
+void ChessBoardSidePanel::resetSlot()
 {
   freeSlotY =0;
   freeSlotX =0;
 }
 
-void ChessBoardSidePanel::SetSlotPos()
+void ChessBoardSidePanel::setSlotPos()
 {
   freeSlotY ++;
   if (freeSlotY > 3)
@@ -29,7 +29,7 @@ void ChessBoardSidePanel::SetSlotPos()
       freeSlotY =0;
     }
 }
-QPointF ChessBoardSidePanel::GetFreeSlotPos()
+QPointF ChessBoardSidePanel::getFreeSlotPos()
 {
   return QPointF((leftSifde ? 0:600) +freeSlotY * 50,freeSlotX * 50);
 }

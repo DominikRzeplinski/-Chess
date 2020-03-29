@@ -9,8 +9,8 @@ public:
   ChessBoardHistory();
   void addMove(ChessBoardMove);
   QList<ChessBoardMove>* getChessBoardHistory();
-  void SaveGame(QString fileName);
-  void LoadGame(QString fileName);
+  void saveGame(QString fileName);
+  void loadGame(QString fileName);
 private:
   QList<ChessBoardMove> chessBoardMoves;
 };

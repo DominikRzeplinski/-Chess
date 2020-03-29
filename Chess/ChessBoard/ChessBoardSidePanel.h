@@ -7,9 +7,9 @@ class ChessBoardSidePanel: public QGraphicsRectItem
 {
 public:
   ChessBoardSidePanel(bool left = true, QGraphicsItem *parent=0);
-  QPointF GetFreeSlotPos();
-  void SetSlotPos();
-  void ResetSlot();
+  QPointF getFreeSlotPos();
+  void setSlotPos();
+  void resetSlot();
 private:
   int freeSlotX;
   int freeSlotY;

@@ -7,9 +7,8 @@ class FigurePawn: public FigureBase
 {
 public:
   FigurePawn(bool side = true,FigureType type = FigureType::Alive, int x =0, int y =0);
-  bool ValidatePosition(int PositionX, int PositionY);
-  bool ValidateStrikePosition(int PositionX, int PositionY);
-  void Promote();
+  bool validatePosition(int PositionX, int PositionY);
+  bool validateStrikePosition(int PositionX, int PositionY);
 private:
   bool moveEnemyDirection(int PositionX);
 };

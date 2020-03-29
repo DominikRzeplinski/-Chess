@@ -11,7 +11,6 @@ public:
   int positionY;
   int newPositionX;
   int newPositionY;
-private:
 };
 
 #endif // CHESSBOARDMOVE_H

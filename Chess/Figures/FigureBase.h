@@ -11,22 +11,19 @@ class FigureBase
 {
 public:
   FigureBase(bool side = true, FigureType type = FigureType::Alive, int x =0, int y =0);
-  bool virtual ValidatePosition(int PositionX, int PositionY) =0;
-  bool virtual ValidateStrikePosition(int PositionX, int PositionY) =0;
+  bool virtual validatePosition(int PositionX, int PositionY) =0;
+  bool virtual validateStrikePosition(int PositionX, int PositionY) =0;
   void setPosition(int Posx, int Posy);
   bool canSelect();
   bool canMove();
-  int m_positionX;
-  int m_positionY;
-  bool m_stopOnOtherFigure;
-  bool m_firstMove;
-  bool m_leftSide;
-  static bool m_leftSideTurn;
-  static bool m_promotionActive;
-  FigureType m_type;
-  QImage m_image;
-protected:
-  bool m_dragOver = false;
+  int positionX;
+  int positionY;
+  bool leftSide;
+  static bool leftSideTurn;
+  FigureType type;
+  bool firstMove;
+  bool stopOnOtherFigure;
+  QImage image;
 };
 
 #endif // FIGUREBASE_H

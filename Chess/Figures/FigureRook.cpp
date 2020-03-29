@@ -3,21 +3,21 @@
 FigureRook::FigureRook(bool side,FigureType type,int x, int y):FigureBase(side,type,x,y)
 {
   if (side)
-    m_image.load(":/File_Chess_rdt45.svg");
+    image.load(":/File_Chess_rdt45.svg");
   else
-    m_image.load(":/File_Chess_rlt45.svg");
+    image.load(":/File_Chess_rlt45.svg");
 
-  m_stopOnOtherFigure = true;
+  stopOnOtherFigure = true;
 }
 
-bool FigureRook::ValidatePosition(int PositionX, int PositionY)
+bool FigureRook::validatePosition(int PositionX, int PositionY)
 {
-  if (m_positionX == PositionX || m_positionY == PositionY)
+  if (positionX == PositionX || positionY == PositionY)
     return true;
   return false;
 }
 
-bool FigureRook::ValidateStrikePosition(int PositionX, int PositionY)
+bool FigureRook::validateStrikePosition(int PositionX, int PositionY)
 {
-  return ValidatePosition(PositionX,PositionY);
+  return validatePosition(PositionX,PositionY);
 }

@@ -7,31 +7,32 @@ class ChessBoard
 public:
   ChessBoard();
   void Reset();
-  QList<FigureBase*> m_figures;
-  QList<FigureBase*> m_promotionFigures;
-  FigureBase* figureElPassa;
-  bool m_promotionActive;
+  void validMoves(int positionX, int positionY);
+  bool setNewPosition(int positionX, int positionY,int newPositionX, int newPositionY);
+  bool promotionSelected(int positionX, int positionY);
+  bool endOfGame;
+  bool checkMate;
+  QList<FigureBase*> figures;
+  QList<FigureBase*> promotionFigures;
   bool leftSideWinner;
-  bool m_endOfGame;
+  bool promotionActive;
+  QVector<QPair<int,int>> availableMoves;
+  QVector<QPair<int,int>> availableStrikeMoves;
+private:
+  FigureBase* figureEnPassant;
   bool validateMoveInOneDirection(FigureBase* figure,int xPos, int yPos, bool enemy = false);
-  void CleanScene();
-  QVector<QPair<int,int>> m_availableMoves;
-  QVector<QPair<int,int>> m_availableStrikeMoves;
-  QVector<QPair<int,int>> m_enemyAvailableMoves;
-  QVector<QPair<int,int>> m_enemyAvailableStrikeMoves;
-  QVector<QPair<int,int>> m_enemyAllValidStrikeMoves;
+  void cleanScene();
+  QVector<QPair<int,int>> enemyAvailableMoves;
+  QVector<QPair<int,int>> enemyAvailableStrikeMoves;
+  QVector<QPair<int,int>> enemyAllValidStrikeMoves;
   FigureBase* getFigureAtPosition(int positionX, int positionY);
   void setAllValidMoves(int positionX, int positionY, bool enemy = false);
-  bool checkMat(bool leftSide);
-  bool m_checkmate;
+  bool isCheckMate(bool leftSide);
   void getEnemyAvailableMoves(bool leftSide);
   void setWinner(bool leftSide);
-  bool promotionSelected(int positionX, int positionY);
-  void validMoves(int positionX, int positionY);
   void clearMoves();
-  bool setNewPosition(int positionX, int positionY,int newPositionX, int newPositionY);
-  bool isElpassaPostion(int xPos, int yPos);
-  bool checkCheckMat(int positionX, int positionY);
+  bool isEnPassantPosition(int xPos, int yPos);
+  bool checkCheckMate(int positionX, int positionY);
 };
 
 #endif // CHESSBOARD_H

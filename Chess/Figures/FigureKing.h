@@ -6,8 +6,8 @@ class FigureKing : public FigureBase
 {
 public:
   FigureKing(bool side = true,FigureType type = FigureType::Alive, int x =0, int y =0);
-  bool ValidatePosition(int PositionX, int PositionY);
-  bool ValidateStrikePosition(int PositionX, int PositionY);
+  bool validatePosition(int PositionX, int PositionY);
+  bool validateStrikePosition(int PositionX, int PositionY);
 };
 
 #endif // FIGUREKING_H

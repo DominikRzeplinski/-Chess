@@ -3,17 +3,17 @@
 
 ChessBoardBox::ChessBoardBox(int xPos, int yPos, QGraphicsItem *parent):QGraphicsRectItem(parent)
 {
-  setRect(0,0,m_sizeOfBox,m_sizeOfBox);
-  setPos(m_leftOfBoard+m_sizeOfBox*yPos,m_topOfBoard+m_sizeOfBox*xPos);
+  setRect(0,0,sizeOfBox,sizeOfBox);
+  setPos(leftOfBoard+sizeOfBox*yPos,topOfBoard+sizeOfBox*xPos);
   setZValue(-1);
-  PositionX = xPos;
-  PositionY = yPos;
+  positionX = xPos;
+  positionY = yPos;
   ResetBrush();
 }
 
 void ChessBoardBox::ResetBrush()
 {
-  if((PositionX+PositionY)%2==0)
+  if((positionX+positionY)%2==0)
     setBrush(Qt::lightGray);
   else
     setBrush(Qt::darkGray);

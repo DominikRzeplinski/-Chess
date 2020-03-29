@@ -50,7 +50,7 @@ void MainWindow::on_actionSave_game_triggered()
                                                   tr("Save Chess Game"), "",
                                                   tr("Chess game (*.chess);;All Files (*)"));
   if (!fileName.isEmpty())
-    m_sceneChessBoard->SaveGame(fileName);
+    m_sceneChessBoard->saveGame(fileName);
 }
 
 void MainWindow::on_actionLoad_game_triggered()
@@ -59,7 +59,7 @@ void MainWindow::on_actionLoad_game_triggered()
                                                   tr("Load Chess Game"), "",
                                                   tr("Chess game (*.chess);;All Files (*)"));
   if (!fileName.isEmpty())
-    m_sceneChessBoard->LoadGame(fileName);
+    m_sceneChessBoard->loadGame(fileName);
 }
 
 void MainWindow::Reset()

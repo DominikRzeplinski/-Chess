@@ -1,38 +1,38 @@
 #include "FigureBase.h"
 
-bool FigureBase::m_leftSideTurn = true;
+bool FigureBase::leftSideTurn = true;
 
 FigureBase::FigureBase(bool side,FigureType type, int x, int y)
 {
-  m_leftSide = side;
-  m_positionX =x;
-  m_positionY =y;
-  m_type = type;
-  m_firstMove = true;
+  leftSide = side;
+  positionX =x;
+  positionY =y;
+  type = type;
+  firstMove = true;
 }
 
 void FigureBase::setPosition(int PosX, int PosY)
 {
-  m_positionX = PosX;
-  m_positionY = PosY;
-  m_firstMove = false;
+  positionX = PosX;
+  positionY = PosY;
+  firstMove = false;
 }
 
 bool FigureBase::canSelect()
 {
 
-  if (m_leftSideTurn != m_leftSide)
+  if (leftSideTurn != leftSide)
     {
       return false;
     }
-  if (m_type == FigureType::Killed)
+  if (type == FigureType::Killed)
     return false;
   return true;
 }
 
 bool FigureBase::canMove()
 {
-  if (m_type != FigureType::Alive)
+  if (type != FigureType::Alive)
     return false;
   return true;
 }

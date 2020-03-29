@@ -5,16 +5,11 @@
 FigureView::FigureView(FigureBase* figure,QGraphicsItem *parent):QGraphicsPixmapItem(parent)
 {
   figureBase = figure;
-  setPixmap(QPixmap::fromImage(figureBase->m_image));
+  setPixmap(QPixmap::fromImage(figureBase->image));
   setCursor(Qt::OpenHandCursor);
   setAcceptedMouseButtons(Qt::LeftButton);
 }
 
-void FigureView::setPosition(QPointF position, int PosX, int PosY)
-{
-  setPos(position);
-  figureBase->setPosition(PosX,PosY);
-}
 
 void FigureView::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
@@ -23,8 +18,8 @@ void FigureView::mousePressEvent(QGraphicsSceneMouseEvent *event)
   m_translatePoint = mapToScene(event->pos()) - pos();
   setZValue(1);
   setCursor(Qt::ClosedHandCursor);
-  emit figureSelected(figureBase->m_positionX,figureBase->m_positionY);
-  emit figurePromotionSelected(figureBase->m_positionX,figureBase->m_positionY);
+  emit figureSelected(figureBase->positionX,figureBase->positionY);
+  emit figurePromotionSelected(figureBase->positionX,figureBase->positionY);
 }
 
 void FigureView::mouseReleaseEvent(QGraphicsSceneMouseEvent *)
@@ -36,7 +31,7 @@ void FigureView::mouseReleaseEvent(QGraphicsSceneMouseEvent *)
   emit figureDeselected();
   if (!figureBase->canMove())
     return;
-  emit figureMoved(figureBase->m_positionX,figureBase->m_positionY);
+  emit figureMoved(figureBase->positionX,figureBase->positionY);
 }
 
 void FigureView::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
