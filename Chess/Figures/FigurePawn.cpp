@@ -15,10 +15,10 @@ bool FigurePawn::validatePosition(int positionX, int positionY)
   if (!moveEnemyDirection(positionX))
     return false;
 
-  if (qFabs(positionX - positionX) == 1 && (positionY == positionY))
+  if (qFabs(this->positionX - positionX) == 1 && (this->positionY == positionY))
     return true;
 
-  if (qFabs(positionX - positionX) == 2 && (positionY == positionY) && firstMove)
+  if (qFabs(this->positionX - positionX) == 2 && (this->positionY == positionY) && firstMove)
     return true;
 
   return false;

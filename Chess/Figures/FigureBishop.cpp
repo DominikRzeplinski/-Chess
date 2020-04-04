@@ -12,7 +12,7 @@ FigureBishop::FigureBishop(bool side,FigureType type,int x, int y):FigureBase(si
 
 bool FigureBishop::validatePosition(int positionX, int positionY)
 {
-  if (qFabs(positionX - positionX) == qFabs(positionY - positionY))
+  if (qFabs(this->positionX - positionX) == qFabs(this->positionY - positionY))
     return true;
 
   return false ;

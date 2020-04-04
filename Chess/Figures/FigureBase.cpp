@@ -1,13 +1,13 @@
 #include "FigureBase.h"
 
-bool FigureBase::leftSideTurn = true;
+bool FigureBase::leftSideTurn = false;
 
 FigureBase::FigureBase(bool side,FigureType type, int x, int y)
 {
   leftSide = side;
   positionX =x;
   positionY =y;
-  type = type;
+  this->type = type;
   firstMove = true;
 }
 
