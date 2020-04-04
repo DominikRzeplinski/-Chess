@@ -60,6 +60,52 @@ public:
    * \return true if figure can be moved, other false
    */
   bool canMove();
+
+  /*!
+   * \brief getPositionX
+   * \return position X coordinates of figure
+   */
+  int getPositionX();
+  /*!
+   * \brief getPositionY
+   * \return position Y coordinates of figure
+   */
+  int getPositionY();
+  /*!
+   * \brief setType
+   * \FigureType type of figure
+   */
+  void setType(FigureType figureType);
+  /*!
+   * \brief getType
+   * \return type of figure
+   */
+  FigureType getType();
+  /*!
+   * \brief isFirstMove
+   * \return true if figure did not done first move
+   */
+  bool isFirstMove();
+  /*!
+   * \brief isLeftSide
+   * \return true if figure is left side
+   */
+  bool isLeftSide();
+  /*!
+   * \brief getStopOnOtherFigure
+   * \return true if figure cant pass other figures
+   */
+  bool getStopOnOtherFigure();
+  /*!
+   * \brief getImage
+   * \return image of figure
+   */
+  QImage getImage();
+  /*!
+   * \brief leftSideTurn static member for class, determinate which player turn is now
+   */
+  static bool leftSideTurn;
+  protected:
   /*!
    * \brief positionX current coordinate of figure
    */
@@ -72,10 +118,6 @@ public:
    * \brief leftSide side determinate for wich player figure is created
    */
   bool leftSide;
-  /*!
-   * \brief leftSideTurn static member for class, determinate which player turn is now
-   */
-  static bool leftSideTurn;
   /*!
    * \brief type type od figure
    */

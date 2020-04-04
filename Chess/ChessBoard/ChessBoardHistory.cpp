@@ -43,10 +43,10 @@ void ChessBoardHistory::saveGame(QString fileName)
   out.setVersion(QDataStream::Qt_4_5);
   for (int i=0 ; i < chessBoardMoves.count(); ++i)
     {
-      out << chessBoardMoves.at(i).promotion;
-      out << chessBoardMoves.at(i).positionX;
-      out << chessBoardMoves.at(i).positionY;
-      out << chessBoardMoves.at(i).newPositionX;
-      out << chessBoardMoves.at(i).newPositionY;
+      out << chessBoardMoves.at(i).getPromotion();
+      out << chessBoardMoves.at(i).getPositionX();
+      out << chessBoardMoves.at(i).getPositionY();
+      out << chessBoardMoves.at(i).getNewPositionX();
+      out << chessBoardMoves.at(i).getNewPositionY();
     }
 }

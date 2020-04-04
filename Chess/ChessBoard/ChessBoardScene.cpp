@@ -49,10 +49,10 @@ void ChessBoardScene::loadGame(QString fileName)
   history->loadGame(fileName);
   for (int i=0;i< history->getChessBoardHistory()->count();++i)
     {
-      chessBoard->validMoves(history->getChessBoardHistory()->at(i).positionX,history->getChessBoardHistory()->at(i).positionY);
-      chessBoard->setNewPosition(history->getChessBoardHistory()->at(i).positionX,history->getChessBoardHistory()->at(i).positionY,history->getChessBoardHistory()->at(i).newPositionX,history->getChessBoardHistory()->at(i).newPositionY);
-      if (history->getChessBoardHistory()->at(i).promotion)
-        chessBoard->promotionSelected(history->getChessBoardHistory()->at(i).positionX,history->getChessBoardHistory()->at(i).positionY);
+      chessBoard->validMoves(history->getChessBoardHistory()->at(i).getPositionX(),history->getChessBoardHistory()->at(i).getPositionY());
+      chessBoard->setNewPosition(history->getChessBoardHistory()->at(i).getPositionX(),history->getChessBoardHistory()->at(i).getPositionY(),history->getChessBoardHistory()->at(i).getNewPositionX(),history->getChessBoardHistory()->at(i).getNewPositionY());
+      if (history->getChessBoardHistory()->at(i).getPromotion())
+        chessBoard->promotionSelected(history->getChessBoardHistory()->at(i).getPositionX(),history->getChessBoardHistory()->at(i).getPositionY());
 
 
     }
@@ -84,10 +84,10 @@ void ChessBoardScene::Reset()
 
   FigureView * figureView;
   //Create Views for figures
-  for(int i=0; i< chessBoard->figures.count();++i)
+  for(int i=0; i< chessBoard->getFiguresCount();++i)
     {
-      figureView = new FigureView(chessBoard->figures.at(i));
-      figureView->setPos(getBoxAtPosition(chessBoard->figures.at(i)->positionX,chessBoard->figures.at(i)->positionY)->pos());
+      figureView = new FigureView(chessBoard->getFigureAt(i));
+      figureView->setPos(getBoxAtPosition(chessBoard->getFigureAt(i)->getPositionX(),chessBoard->getFigureAt(i)->getPositionY())->pos());
       figureViews.append(figureView);
       addItem(figureView);
       QObject::connect(figureView, &FigureView::figureSelected,
@@ -107,10 +107,10 @@ void ChessBoardScene::Reset()
   addItem(promotion);
 
   //Create Views for promotion figures
-  for (int i =0 ; i < chessBoard->promotionFigures.count(); ++i)
+  for (int i =0 ; i < chessBoard->getpromotionFiguresCount(); ++i)
     {
-      figureView = new FigureView(chessBoard->promotionFigures.at(i));
-      figureView->setPos(250 - chessBoard->promotionFigures.at(i)->positionY * 50,200 - chessBoard->promotionFigures.at(i)->positionX * 50 );
+      figureView = new FigureView(chessBoard->getpromotionFiguresAt(i));
+      figureView->setPos(250 - chessBoard->getpromotionFiguresAt(i)->getPositionY() * 50,200 - chessBoard->getpromotionFiguresAt(i)->getPositionX() * 50 );
       figureView->hide();
       promotionFigureViews.append(figureView);
       addItem(figureView);
@@ -171,9 +171,9 @@ void ChessBoardScene::setNewPosition(int positionX, int positionY)
 
 void ChessBoardScene::refresh()
 {
-  if (chessBoard->endOfGame)
+  if (chessBoard->isEndOfGame())
     {
-      if (chessBoard->leftSideWinner)
+      if (chessBoard->getLeftSideWinner())
         {
           playerTextLeft->setPlainText("Winner");
           playerTextLeft->adjustSize();
@@ -184,7 +184,7 @@ void ChessBoardScene::refresh()
         }
       return;
     }
-  else if (chessBoard->checkMate)
+  else if (chessBoard->getCheckMate())
     {
       if (figureViews.at(0)->figureBase->leftSideTurn)
         {
@@ -208,16 +208,16 @@ void ChessBoardScene::refresh()
   panelRight->resetSlot();
   for (int i=0; i< figureViews.count(); i++)
     {
-      if (figureViews.at(i)->figureBase->type == FigureType::Alive)
+      if (figureViews.at(i)->figureBase->getType() == FigureType::Alive)
         {
-          figureViews.at(i)->setPos(getBoxAtPosition(figureViews.at(i)->figureBase->positionX,figureViews.at(i)->figureBase->positionY)->pos());
+          figureViews.at(i)->setPos(getBoxAtPosition(figureViews.at(i)->figureBase->getPositionX(),figureViews.at(i)->figureBase->getPositionY())->pos());
           figureViews.at(i)->show();
         }
-      else if (figureViews.at(i)->figureBase->type == FigureType::Killed)
+      else if (figureViews.at(i)->figureBase->getType() == FigureType::Killed)
         {
           figureViews.at(i)->setAcceptedMouseButtons(Qt::NoButton);
           figureViews.at(i)->setCursor(Qt::ArrowCursor);
-          if (figureViews.at(i)->figureBase->leftSide)
+          if (figureViews.at(i)->figureBase->isLeftSide())
             {
               figureViews.at(i)->setPos(panelLeft->getFreeSlotPos());
               panelLeft->setSlotPos();
@@ -232,7 +232,7 @@ void ChessBoardScene::refresh()
       else
         figureViews.at(i)->hide();
     }
-  if (chessBoard->promotionActive)
+  if (chessBoard->getPromotionActive())
     {
       promotion->show();
       for (int i=0;i<promotionFigureViews.count(); i++)
@@ -253,7 +253,7 @@ void ChessBoardScene::refreshAfterPromotion()
 {
   for (int i =0; i< promotionFigureViews.count(); ++i)
     {
-      if (promotionFigureViews.at(i)->figureBase->type == FigureType::Alive)
+      if (promotionFigureViews.at(i)->figureBase->getType() == FigureType::Alive)
         {
           figureViews.append(promotionFigureViews.at(i));
           QObject::disconnect(promotionFigureViews.at(i), &FigureView::figurePromotionSelected,
@@ -282,10 +282,12 @@ void ChessBoardScene::validMoves(int positionX, int positionY)
 
 void ChessBoardScene::setColorForBoxes()
 {
-  for (int i=0; i < chessBoard->availableMoves.count(); i++)
-    getBoxAtPosition(chessBoard->availableMoves.at(i).first,chessBoard->availableMoves.at(i).second)->setBrush(Qt::green);
-  for (int i=0; i< chessBoard->availableStrikeMoves.count(); i++)
-    getBoxAtPosition(chessBoard->availableStrikeMoves.at(i).first,chessBoard->availableStrikeMoves.at(i).second)->setBrush(Qt::red);
+  QVector<QPair<int,int>> availableMoves = chessBoard->getAvailableMoves();
+  for (int i=0; i < availableMoves.count(); i++)
+    getBoxAtPosition(availableMoves.at(i).first,availableMoves.at(i).second)->setBrush(Qt::green);
+  QVector<QPair<int,int>> availableStrikeMoves = chessBoard->getAvailableStrikeMoves();
+  for (int i=0; i< availableStrikeMoves.count(); i++)
+    getBoxAtPosition(availableStrikeMoves.at(i).first,availableStrikeMoves.at(i).second)->setBrush(Qt::red);
 
 }
 

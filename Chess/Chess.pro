@@ -28,6 +28,7 @@ SOURCES += \
     Figures/FigureBishop.cpp \
     Figures/FigureKing.cpp \
     Figures/FigureKnight.cpp \
+    Figures/FigureKnightBishop.cpp \
     Figures/FigurePawn.cpp \
     Figures/FigureQueen.cpp \
     Figures/FigureRook.cpp \
@@ -48,6 +49,7 @@ HEADERS += \
     Figures/FigureBishop.h \
     Figures/FigureKing.h \
     Figures/FigureKnight.h \
+    Figures/FigureKnightBishop.h \
     Figures/FigurePawn.h \
     Figures/FigureQueen.h \
     Figures/FigureRook.h \

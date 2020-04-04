@@ -41,29 +41,58 @@ public:
    */
   bool promotionSelected(int positionX, int positionY);
   /*!
-   * \brief endOfGame true if game has ended, other false
+   * \brief isEndOfGame
+   * \return true if game has ended
    */
-  bool endOfGame;
+  bool isEndOfGame();
   /*!
-   * \brief checkMate true if checkMate was done
+   * \brief getLeftSideWinner
+   * \return true if winner is player on left side
    */
-  bool checkMate;
+  bool getLeftSideWinner();
   /*!
-   * \brief figures figures that are in game or where killed
+   * \brief checkMate
+   * \return true if check mate
    */
-  QList<FigureBase*> figures;
+  bool getCheckMate();
   /*!
-   * \brief promotionFigures figures that are available to be chosen during promotion
+   * \brief getPromotionActive
+   * \return true if promotion is active
    */
-  QList<FigureBase*> promotionFigures;
+  bool getPromotionActive();
   /*!
-   * \brief leftSideWinner true if player on left side win, other false
+   * \brief getFiguresCount
+   * \return numebr of figures
    */
-  bool leftSideWinner;
+  int getFiguresCount();
   /*!
-   * \brief promotionActive true if pawn is in promotion, other false
+   * \brief getFigureAt
+   * \param idx of figure
+   * \return Figure pointer at index position
    */
-  bool promotionActive;
+  FigureBase *getFigureAt(int idx);
+  /*!
+   * \brief getpromotionFiguresAt
+   * \return numebr of promotion figures
+   */
+  int getpromotionFiguresCount();
+  /*!
+   * \brief getpromotionFiguresAt
+   * \param idx of figure
+   * \return Figure pointer at index position
+   */
+  FigureBase *getpromotionFiguresAt(int idx);
+  /*!
+   * \brief getAvailableMoves
+   * \return vector of available moves
+   */
+  QVector<QPair<int,int>> getAvailableMoves();
+  /*!
+   * \brief getAvailableStrikeMoves
+   * \return vector of available strike moves
+   */
+  QVector<QPair<int,int>> getAvailableStrikeMoves();
+private:
   /*!
    * \brief availableMoves list of valid moves for selected figure
    */
@@ -72,7 +101,30 @@ public:
    * \brief availableStrikeMoves list of valid strike moves for selected figure
    */
   QVector<QPair<int,int>> availableStrikeMoves;
-private:
+  /*!
+   * \brief promotionFigures figures that are available to be chosen during promotion
+   */
+  QList<FigureBase*> promotionFigures;
+  /*!
+   * \brief figures figures that are in game or where killed
+   */
+  QList<FigureBase*> figures;
+  /*!
+   * \brief endOfGame true if game has ended, other false
+   */
+  bool endOfGame;
+  /*!
+   * \brief checkMate true if checkMate was done
+   */
+  bool checkMate;
+  /*!
+   * \brief leftSideWinner true if player on left side win, other false
+   */
+  bool leftSideWinner;
+  /*!
+   * \brief promotionActive true if pawn is in promotion, other false
+   */
+  bool promotionActive;
   /*!
    * \brief figureEnPassant temporarily figure created after pawn dash 2 position.
    * used to determinate if enamy pawn can be killed EnPassant

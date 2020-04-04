@@ -17,6 +17,33 @@ public:
    */
   ChessBoardMove(int posX, int posY, int newPosX, int newPosY, bool promo = false);
   /*!
+   * \brief getPromotion
+   * \return promotion flag
+   */
+  bool getPromotion() const;
+  /*!
+   * \brief getPositionX
+   * \return position X
+   */
+  int getPositionX() const;
+  /*!
+   * \brief getPositionY
+   * \return position Y
+   */
+  int getPositionY() const;
+  /*!
+   * \brief getNewPositionX
+   * \return new position X
+   */
+  int getNewPositionX() const;
+  /*!
+   * \brief getNewPositionY
+   * \return new position Y
+   */
+  int getNewPositionY() const;
+
+private:
+  /*!
    * \brief promotion of pawn
    */
   bool promotion;

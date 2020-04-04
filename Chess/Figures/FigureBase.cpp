@@ -36,3 +36,12 @@ bool FigureBase::canMove()
     return false;
   return true;
 }
+
+int FigureBase::getPositionX(){ return positionX;}
+int FigureBase::getPositionY(){ return positionY;}
+bool FigureBase::isLeftSide() {return leftSide;}
+bool FigureBase::isFirstMove(){return firstMove;}
+FigureType FigureBase::getType(){return type;}
+void FigureBase::setType(FigureType figureType){type =figureType;}
+bool FigureBase::getStopOnOtherFigure(){return stopOnOtherFigure;}
+QImage FigureBase::getImage(){return image;}
